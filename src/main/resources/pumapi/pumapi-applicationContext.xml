@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# Spring context to instantiate a PUMAPI web client
+#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <!-- Default client (pre-configured from properties file) -->
+    <bean id="defaultPumapiClient" class="org.imagopole.ppms.impl.PumapiBufferedHttpClient">
+        <constructor-arg name="config" ref="pumapiConfiguration"/>
+        <property name="httpInvoker">
+            <bean class="org.imagopole.ppms.impl.PumapiHcFluentClientInvoker"/>
+        </property>
+        <property name="dataConverterFactory" ref="defaultResponseConverterFactory"/>
+    </bean>
+
+    <!-- Type converters factory for API responses parsing and bean mapping -->
+    <bean id="defaultResponseConverterFactory" class="org.imagopole.ppms.impl.convert.DefaultResponseConverterFactory"/>
+
+    <!-- Configuration settings from properties file substitution -->
+    <bean id="pumapiConfiguration" class="org.imagopole.ppms.api.config.PumapiConfig">
+       <property name="endpoint"       value="%{pumapi.endpoint}"/>
+       <property name="apiKey"         value="%{pumapi.api_key}"/>
+       <property name="proxyHost"      value="%{pumapi.proxy_host}"/>
+       <property name="proxyPort"      value="%{pumapi.proxy_port}"/>
+       <property name="connectTimeout" value="%{pumapi.connect_timeout}"/>
+       <property name="socketTimeout"  value="%{pumapi.socket_timeout}"/>
+    </bean>
+
+    <!-- Load PUMAPI configuration from properties file
+         * allow system properties to take precedence over file settings
+         * do not fail on missing file or settings keys
+         * use a custom placeholder prefix: resolve placeholders using %{} instead of the default ${}
+           This is useful when multiple PropertyPlaceHolderConfigurers have been defined in
+           the spring context but the first one to run does not ignore unresolvable placeholders
+           and blows up before this PlaceholderConfigurer is given a chance to initialize, whilst
+           avoiding trying to hijack the placeholder configurers ordering.
+     -->
+    <bean id="pumapiProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+        <property name="placeholderPrefix" value="%{"/>
+        <property name="nullValue" value="@NULL"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="locations">
+          <list>
+            <value>classpath*:pumapi/pumapi-client.properties</value>
+          </list>
+        </property>
+    </bean>
+
+</beans>

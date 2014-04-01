@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Spring context to instanciate a PUMAPI web client
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <!--  Integration testing client:
+           * uses a no-op config provider for validation testing
+           * uses a remote API endpoint
+     -->
+    <bean id="integrationTestsPumapiClient" class="org.imagopole.ppms.impl.PumapiBufferedHttpClient">
+        <constructor-arg name="config" ref="pumapiConfiguration"/>
+        <property name="httpInvoker">
+            <bean class="org.imagopole.ppms.impl.PumapiHcFluentClientInvoker"/>
+        </property>
+        <property name="dataConverterFactory" ref="defaultResponseConverterFactory"/>
+    </bean>
+
+    <!-- Type converters factory for API responses parsing and bean mapping -->
+    <bean id="defaultResponseConverterFactory" class="org.imagopole.ppms.impl.convert.DefaultResponseConverterFactory"/>
+
+    <!-- Configuration settings from properties file substitution -->
+    <bean id="pumapiConfiguration" class="org.imagopole.ppms.api.config.PumapiConfig">
+       <property name="endpoint"       value="${pumapi.endpoint}"/>
+       <property name="apiKey"         value="${pumapi.api_key}"/>
+       <property name="proxyHost"      value="${pumapi.proxy_host}"/>
+       <property name="proxyPort"      value="${pumapi.proxy_port}"/>
+       <property name="connectTimeout" value="${pumapi.connect_timeout}"/>
+       <property name="socketTimeout"  value="${pumapi.socket_timeout}"/>
+    </bean>
+
+    <!-- Configuration file -->
+    <bean id="pumapiProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="nullValue" value="@NULL"/>
+        <property name="location" value="classpath:pumapi/pumapi-test.properties"/>
+    </bean>
+
+</beans>

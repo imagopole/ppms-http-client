@@ -1,0 +1,21 @@
+name: PumapiTestSuite
+
+tests:
+
+  - name: Api
+    classes:
+      - org.imagopole.ppms.api.config.PumapiConfigTests
+      - org.imagopole.ppms.api.convert.GetUsersResponseConverterTests
+
+  - name: Impl
+    classes:
+      - org.imagopole.ppms.impl.GenericIntegrationTests
+      - org.imagopole.ppms.impl.AuthenticateTests
+      - org.imagopole.ppms.impl.GetGroupTests
+      - org.imagopole.ppms.impl.GetUserRightsTests
+      - org.imagopole.ppms.impl.GetUsersTests
+      - org.imagopole.ppms.impl.GetUserTests
+
+
+
+
