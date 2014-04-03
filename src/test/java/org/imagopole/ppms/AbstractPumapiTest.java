@@ -104,6 +104,17 @@ public abstract class AbstractPumapiTest extends UnitilsSpringTestNG {
         return getConfigProperties().getProperty(TestKeys.UNIT_LOGIN);
     }
 
+    protected Long getIntegrationSystemId() {
+        Long result = null;
+
+        String systemId = getConfigProperties().getProperty(TestKeys.SYSTEM_ID);
+        if (null != systemId) {
+            result = Long.parseLong(systemId);
+        }
+
+        return result;
+    }
+
     /**
      * Returns integrationClient.
      * @return the integrationClient

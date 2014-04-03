@@ -7,13 +7,14 @@ import java.util.List;
 
 import org.imagopole.ppms.api.config.PumapiConfig;
 import org.imagopole.ppms.api.dto.PpmsGroup;
+import org.imagopole.ppms.api.dto.PpmsSystem;
 import org.imagopole.ppms.api.dto.PpmsUser;
-import org.imagopole.ppms.api.dto.PumapiParams.PpmsSystemPrivilege;
+import org.imagopole.ppms.api.dto.PpmsUserPrivilege;
 
 
 /**
  * Interface definition to a PPMS Management Utility API (PUMAPI) as of
- * revision <code>2013.2</code>.
+ * revision <code>2014.0</code>.
  *
  * @author seb
  *
@@ -61,19 +62,15 @@ public interface PumapiClient {
 
     /**
      * Retrieves a list of PPMS instruments (a.k.a systems) available to a given
-     * username, and posssibly a privilege level on that system (eg. autonomy).
-     *
-     * If the privilege parameter is null, all systems to which the given user
-     * has been granted access are looked up.
+     * username, keyed by privilege level on that system (eg. autonomy).
      *
      * @param login the PPMS username
-     * @param privilege may be null - privilege filter
-     * @return a list of instrument identifiers, or an empty list if none found
+     * @return a list of instrument identifiers indexed by privilege level, or an empty list if none found
      * @throws PumapiException in case of an underlying error (API or technical)
      *
      * @see <code>getuserrights</code> PUMAPI action
      */
-    List<Long> getUserRights(String login, PpmsSystemPrivilege privilege) throws PumapiException;
+    List<PpmsUserPrivilege> getUserRights(String login) throws PumapiException;
 
     //List<String> getUserProjects(String login) throws PumapiException;
 
@@ -88,6 +85,8 @@ public interface PumapiClient {
      * @see <code>getgroup</code> PUMAPI action
      */
     PpmsGroup getGroup(String unitLogin) throws PumapiException;
+
+    PpmsSystem getSystem(Long systemId) throws PumapiException;
 
     /**
      * Validates password for a PPMS user.

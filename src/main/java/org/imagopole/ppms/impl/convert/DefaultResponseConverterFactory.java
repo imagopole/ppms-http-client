@@ -64,13 +64,17 @@ public class DefaultResponseConverterFactory implements PumapiResponseConverterF
                 result = new GetUsersCsvResponseConverter();
                 break;
 
+            case GetSystem:
+                result = new GetSystemCsvResponseConverter();
+                break;
+
             default:
                 throw new IllegalStateException(
                     String.format("No response converter for PUMAPI request with action: %s and format: %s",
                                   action, forSourceObject.getResponseFormat()));
         }
 
-        log.trace("[pumapi] Using response converter: {} for request action: {} [noheader:{}]",
+        log.debug("[pumapi] Using response converter: {} for request action: {} [noheader:{}]",
                   result.getClass().getSimpleName(), action, isNoHeaders);
 
         return result;

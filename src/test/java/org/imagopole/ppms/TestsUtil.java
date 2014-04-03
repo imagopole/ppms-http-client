@@ -68,6 +68,9 @@ public class TestsUtil {
         /** PPMS group (unit) string identifer */
         public final static String UNIT_LOGIN = "pumapi.tests.unitlogin";
 
+        /** PPMS system (instrument) string identifer */
+        public final static String SYSTEM_ID = "pumapi.tests.systemid";
+
         /** Private constructor (utility class) */
         private TestKeys() {
             super();

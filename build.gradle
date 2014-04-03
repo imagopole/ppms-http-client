@@ -21,7 +21,7 @@ description = """HTTP client for the PPMS Utility Management API (PUMAPI)"""
 /**** Custom properties     ****/
 
 ext.versions = [
-    pumapi       : '2013.2',
+    pumapi       : '2014.0',
     httpClient   : '4.3.2',        //--OMERO: n/a
     csveed       : '0.3.2',        //--OMERO: n/a
     slf4j        : '1.7.5',        //--OMERO: n/a (logback-core + logback-classic 1.0.9)

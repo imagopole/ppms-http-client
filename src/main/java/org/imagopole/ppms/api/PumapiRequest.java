@@ -141,6 +141,7 @@ public class PumapiRequest {
         Active("active"),
         Login("login"),
         UnitLogin("unitlogin"),
+        Id("id"),
         Password("pwd");
 
         /** PUMAPI call identifier */
@@ -182,6 +183,7 @@ public class PumapiRequest {
         GetUser("getuser"),
         GetUserRights("getuserrights"),
         GetGroup("getgroup"),
+        GetSystem("getsystems"),
         Authenticate("auth");
 
         /** PUMAPI call identifier */

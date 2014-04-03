@@ -3,9 +3,7 @@
  */
 package org.imagopole.ppms.impl;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.imagopole.ppms.api.PumapiClient;
 import org.imagopole.ppms.api.PumapiException;
@@ -17,8 +15,9 @@ import org.imagopole.ppms.api.config.PumapiConfig;
 import org.imagopole.ppms.api.convert.PumapiDataConverter;
 import org.imagopole.ppms.api.convert.PumapiResponseConverterFactory;
 import org.imagopole.ppms.api.dto.PpmsGroup;
+import org.imagopole.ppms.api.dto.PpmsSystem;
 import org.imagopole.ppms.api.dto.PpmsUser;
-import org.imagopole.ppms.api.dto.PumapiParams.PpmsSystemPrivilege;
+import org.imagopole.ppms.api.dto.PpmsUserPrivilege;
 import org.imagopole.ppms.util.Check;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -135,10 +134,8 @@ public class PumapiBufferedHttpClient implements PumapiClient {
      */
     @Override
     @SuppressWarnings("unchecked")
-    public List<Long> getUserRights(String login, PpmsSystemPrivilege privilege) throws PumapiException {
+    public List<PpmsUserPrivilege> getUserRights(String login) throws PumapiException {
         Check.notEmpty(login, "login");
-
-        List<Long> result = new ArrayList<Long>();
 
         final PumapiRequest request =
             newRequest()
@@ -146,19 +143,7 @@ public class PumapiBufferedHttpClient implements PumapiClient {
                 .withFilter(Filter.Login, login);
 
         // retrieve all available systems for the given user
-        Map<PpmsSystemPrivilege, List<Long>> unfilteredResults =
-            (Map<PpmsSystemPrivilege, List<Long>>) invokeAndConvert(request);
-
-        // filter out systems based on privilege level if requested
-        if (null != privilege) {
-            if (unfilteredResults.containsKey(privilege)) {
-                result = unfilteredResults.get(privilege);
-            }
-        } else { // otherwise return the full list of all accessible instruments
-            for (PpmsSystemPrivilege priv : unfilteredResults.keySet()) {
-                result.addAll(unfilteredResults.get(priv));
-            }
-        }
+        List<PpmsUserPrivilege> result = (List<PpmsUserPrivilege>) invokeAndConvert(request);
 
         return result;
     }
@@ -177,6 +162,24 @@ public class PumapiBufferedHttpClient implements PumapiClient {
                 .withFilter(Filter.UnitLogin, unitLogin);
 
         PpmsGroup result = (PpmsGroup) invokeAndConvert(request);
+
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PpmsSystem getSystem(Long systemId) throws PumapiException {
+        Check.notNull(systemId, "systemId");
+
+        final PumapiRequest request =
+            newRequest()
+                .toCsv()
+                .forAction(Action.GetSystem)
+                .withFilter(Filter.Id, systemId.toString());
+
+        PpmsSystem result = (PpmsSystem) invokeAndConvert(request);
 
         return result;
     }

@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.imagopole.ppms.impl.convert.GetUsersCsvResponseConverter;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
@@ -18,7 +19,7 @@ import org.testng.annotations.Test;
 public class GetUsersResponseConverterTests {
 
     @Test
-    public void stringCollectionConverterShouldConvertNullToEmptyList() {
+    public void shouldConvertNullToEmptyList() {
         Collection<String> result = new GetUsersCsvResponseConverter().map(null);
 
         assertNotNull(result, "Non-null result expected");
@@ -26,7 +27,7 @@ public class GetUsersResponseConverterTests {
     }
 
     @Test
-    public void stringCollectionConverterShouldConvertBlankToEmptyList() {
+    public void shouldConvertBlankToEmptyList() {
         Collection<String> result = new GetUsersCsvResponseConverter().map("");
 
         assertNotNull(result, "Non-null result expected");
@@ -34,7 +35,7 @@ public class GetUsersResponseConverterTests {
     }
 
     @Test
-    public void stringCollectionConverterShouldConvertWhitespaceToEmptyList() {
+    public void shouldConvertWhitespaceToEmptyList() {
         Collection<String> result = new GetUsersCsvResponseConverter().map("    ");
 
         assertNotNull(result, "Non-null result expected");
@@ -42,7 +43,7 @@ public class GetUsersResponseConverterTests {
     }
 
     @Test
-    public void stringCollectionConverterShouldRemoveCarriageReturns() {
+    public void shouldRemoveCarriageReturns() {
         List<String> result = new GetUsersCsvResponseConverter().map("cr.start \r cr.end");
 
         assertNotNull(result, "Non-null result expected");
@@ -52,7 +53,7 @@ public class GetUsersResponseConverterTests {
     }
 
     @Test
-    public void stringCollectionConverterShouldRemoveLineFeeds() {
+    public void shouldRemoveLineFeeds() {
         List<String> result = new GetUsersCsvResponseConverter().map("lf.start \n lf.end");
 
         assertNotNull(result, "Non-null result expected");
@@ -62,7 +63,7 @@ public class GetUsersResponseConverterTests {
     }
 
     @Test
-    public void stringCollectionConverterShouldRemoveEndOfLines() {
+    public void shouldRemoveEndOfLines() {
         List<String> result = new GetUsersCsvResponseConverter().map("crlf.start \r\n crlf.end");
 
         assertNotNull(result, "Non-null result expected");
@@ -72,7 +73,7 @@ public class GetUsersResponseConverterTests {
     }
 
     @Test
-    public void stringCollectionConverterShouldRemoveTrailingSpaces() {
+    public void shouldRemoveTrailingSpaces() {
         List<String> result = new GetUsersCsvResponseConverter().map("  trail.start with.trailing.space+eol \r\n  ");
 
         assertNotNull(result, "Non-null result expected");

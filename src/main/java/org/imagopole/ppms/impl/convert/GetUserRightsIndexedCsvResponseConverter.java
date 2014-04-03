@@ -3,15 +3,15 @@
  */
 package org.imagopole.ppms.impl.convert;
 
-import static org.imagopole.ppms.util.Check.empty;
 import static org.imagopole.ppms.util.PumapiUtil.trimAll;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import org.imagopole.ppms.api.convert.PumapiDataConverter;
-import org.imagopole.ppms.api.dto.PpmsUserPrivilege;
 import org.imagopole.ppms.api.dto.PumapiParams.PpmsSystemPrivilege;
 import org.imagopole.ppms.util.PumapiUtil;
 
@@ -28,8 +28,8 @@ import org.imagopole.ppms.util.PumapiUtil;
  * @author seb
  * @see java.util.Scanner
  */
-public class GetUserRightsCsvResponseConverter
-       implements PumapiDataConverter<String, List<PpmsUserPrivilege>> {
+public class GetUserRightsIndexedCsvResponseConverter
+       implements PumapiDataConverter<String, Map<PpmsSystemPrivilege, List<Long>>> {
 
     /** Record separator for the <code>getuserrights</code> API call.
      *  Note: breaking change from PUMAPI 2013.2 (':') to 2014 (',') */
@@ -41,13 +41,14 @@ public class GetUserRightsCsvResponseConverter
     /**
      * Vanilla constructor
      */
-    public GetUserRightsCsvResponseConverter() {
+    public GetUserRightsIndexedCsvResponseConverter() {
         super();
     }
 
     @Override
-    public List<PpmsUserPrivilege> map(String input) {
-        List<PpmsUserPrivilege> result = new ArrayList<PpmsUserPrivilege>();
+    public Map<PpmsSystemPrivilege, List<Long>> map(String input) {
+        Map<PpmsSystemPrivilege, List<Long>> result =
+            new EnumMap<PpmsSystemPrivilege, List<Long>>(PpmsSystemPrivilege.class);
 
         if (null != input && !input.isEmpty()) {
             Scanner scanner = new Scanner(input);
@@ -56,21 +57,16 @@ public class GetUserRightsCsvResponseConverter
                 String line = scanner.nextLine();
                 String sanitizedLine = trimAll(line);
 
-                PpmsUserPrivilege userRight = toUserPrivilege(sanitizedLine);
-                if (null != userRight) {
-
-                    result.add(userRight);
-
-                }
+                convertLine(result, sanitizedLine);
             }
         }
 
         return result;
     }
 
-    private PpmsUserPrivilege toUserPrivilege(String sanitizedLine) {
-
-        PpmsUserPrivilege result = null;
+    private void convertLine(
+            Map<PpmsSystemPrivilege, List<Long>> result,
+            String sanitizedLine) {
 
         if (null != sanitizedLine && !sanitizedLine.isEmpty()) {
             String[] lineParts = sanitizedLine.split(RECORDS_SEPARATOR);
@@ -79,33 +75,48 @@ public class GetUserRightsCsvResponseConverter
                 String privilegeCode = lineParts[0];
                 String instrumentId = lineParts[1];
 
-                result = parseUserPrivilege(privilegeCode, instrumentId);
+                convertLineParts(result, privilegeCode, instrumentId);
             }
         }
-
-        return result;
     }
 
-    private PpmsUserPrivilege parseUserPrivilege(String privilegeCode, String instrumentId)
-                    throws IllegalArgumentException, NumberFormatException {
+    private void convertLineParts(
+            Map<PpmsSystemPrivilege, List<Long>> result,
+            String privilegeCode,
+            String instrumentId) throws IllegalArgumentException, NumberFormatException {
 
-        PpmsUserPrivilege result = null;
-
-        if (!empty(privilegeCode) && !empty(instrumentId)) {
+        if (null != privilegeCode && null != instrumentId
+            && !privilegeCode.isEmpty() && !instrumentId.isEmpty()) {
 
             // perform line parsing
             // may throw IllegalArgumentException
-            PpmsSystemPrivilege privilege = PpmsSystemPrivilege.fromString(privilegeCode);
+            PpmsSystemPrivilege privilege =
+                PpmsSystemPrivilege.fromString(privilegeCode);
 
             // may throw NumberFormatException
             Long systemId = Long.parseLong(instrumentId);
 
             // parsing successful
-            result = new PpmsUserPrivilege(systemId, privilege);
+            addResult(result, privilege, systemId);
 
         }
+    }
 
-        return result;
+    private void addResult(
+            Map<PpmsSystemPrivilege, List<Long>> result,
+            PpmsSystemPrivilege privilege,
+            Long instrumentId) {
+
+        List<Long> systemsForPrivilege = null;
+
+        if (result.containsKey(privilege)) {
+            systemsForPrivilege = result.get(privilege);
+        } else {
+            systemsForPrivilege = new ArrayList<Long>();
+            result.put(privilege, systemsForPrivilege);
+        }
+
+        systemsForPrivilege.add(instrumentId);
     }
 
 }

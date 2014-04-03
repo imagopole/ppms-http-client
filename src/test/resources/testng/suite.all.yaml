@@ -12,6 +12,7 @@ tests:
       - org.imagopole.ppms.impl.GenericIntegrationTests
       - org.imagopole.ppms.impl.AuthenticateTests
       - org.imagopole.ppms.impl.GetGroupTests
+      - org.imagopole.ppms.impl.GetSystemTests
       - org.imagopole.ppms.impl.GetUserRightsTests
       - org.imagopole.ppms.impl.GetUsersTests
       - org.imagopole.ppms.impl.GetUserTests
