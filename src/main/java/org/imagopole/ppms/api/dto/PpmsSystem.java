@@ -11,7 +11,7 @@ package org.imagopole.ppms.api.dto;
  */
 public class PpmsSystem {
 
-    private String coreFacilityRef;
+    private Long coreFacilityRef;
     private Long systemId;
     private String type;
     private String name;
@@ -34,7 +34,7 @@ public class PpmsSystem {
      * Returns coreFacilityRef.
      * @return the coreFacilityRef
      */
-    public String getCoreFacilityRef() {
+    public Long getCoreFacilityRef() {
         return coreFacilityRef;
     }
 
@@ -42,7 +42,7 @@ public class PpmsSystem {
      * Sets coreFacilityRef.
      * @param coreFacilityRef the coreFacilityRef to set
      */
-    public void setCoreFacilityRef(String coreFacilityRef) {
+    public void setCoreFacilityRef(Long coreFacilityRef) {
         this.coreFacilityRef = coreFacilityRef;
     }
 

@@ -72,7 +72,7 @@ public class GetGroupCsvResponseConverter
                    .mapColumnNameToProperty("institution", "institution")
                    .mapColumnNameToProperty("address", "address")
                    .mapColumnNameToProperty("affiliation", "affiliation")
-                   .mapColumnNameToProperty("ext", "ext")
+                   .mapColumnNameToProperty("ext", "ext").setRequired("ext", true)
                    .mapColumnNameToProperty("active", "active").setRequired("active", true);
 
         return csvReader;

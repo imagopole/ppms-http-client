@@ -20,7 +20,7 @@ public class PpmsGroup {
     private String institution;
     private String address;
     private String affiliation;
-    private String ext;
+    private Boolean ext;
     private Boolean active;
 
     /**
@@ -178,7 +178,7 @@ public class PpmsGroup {
      * Returns ext.
      * @return the ext
      */
-    public String getExt() {
+    public Boolean getExt() {
         return ext;
     }
 
@@ -186,7 +186,7 @@ public class PpmsGroup {
      * Sets ext.
      * @param ext the ext to set
      */
-    public void setExt(String ext) {
+    public void setExt(Boolean ext) {
         this.ext = ext;
     }
 
