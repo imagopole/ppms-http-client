@@ -13,7 +13,7 @@ apply plugin: 'jacoco'         // gradle-1.9 incubating
 /**** Project configuration ****/
 
 group = 'org.imagopole.ppms'
-version = '0.3-SNAPSHOT'
+version = '0.3'
 description = """HTTP client for the PPMS Utility Management API (PUMAPI)"""
 
 
