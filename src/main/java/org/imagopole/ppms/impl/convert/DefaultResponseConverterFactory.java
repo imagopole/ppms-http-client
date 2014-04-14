@@ -57,7 +57,7 @@ public class DefaultResponseConverterFactory implements PumapiResponseConverterF
                 break;
 
             case GetUserRights:
-                result = new GetUserRightsCsvResponseConverter();
+                result = new GetUserRightsColonResponseConverter();
                 break;
 
             case GetUsers:

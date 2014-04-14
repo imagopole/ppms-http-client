@@ -1,4 +1,4 @@
-package org.imagopole.ppms.api.convert;
+package org.imagopole.ppms.impl.convert;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
@@ -8,7 +8,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.imagopole.ppms.impl.convert.GetUsersCsvResponseConverter;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
