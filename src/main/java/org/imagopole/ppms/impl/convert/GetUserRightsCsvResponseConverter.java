@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.imagopole.ppms.api.convert.PumapiDataConverter;
+import org.imagopole.ppms.api.dto.PpmsPrivilege;
 import org.imagopole.ppms.api.dto.PpmsUserPrivilege;
-import org.imagopole.ppms.api.dto.PumapiParams.PpmsSystemPrivilege;
 import org.imagopole.ppms.util.PumapiUtil;
 
 /**
@@ -95,7 +95,7 @@ public class GetUserRightsCsvResponseConverter
 
             // perform line parsing
             // may throw IllegalArgumentException
-            PpmsSystemPrivilege privilege = PpmsSystemPrivilege.fromString(privilegeCode);
+            PpmsPrivilege privilege = PpmsPrivilege.fromString(privilegeCode);
 
             // may throw NumberFormatException
             Long systemId = Long.parseLong(instrumentId);

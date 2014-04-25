@@ -3,7 +3,6 @@
  */
 package org.imagopole.ppms.api.dto;
 
-import org.imagopole.ppms.api.dto.PumapiParams.PpmsSystemPrivilege;
 
 /**
  * A PPMS user right entity as returned by PUMAPI.
@@ -14,7 +13,7 @@ import org.imagopole.ppms.api.dto.PumapiParams.PpmsSystemPrivilege;
 public class PpmsUserPrivilege {
 
     private Long systemId;
-    private PpmsSystemPrivilege privilege;
+    private PpmsPrivilege privilege;
 
     /**
      *
@@ -27,7 +26,7 @@ public class PpmsUserPrivilege {
      * @param systemId
      * @param privilege
      */
-    public PpmsUserPrivilege(Long systemId, PpmsSystemPrivilege privilege) {
+    public PpmsUserPrivilege(Long systemId, PpmsPrivilege privilege) {
         super();
         this.systemId = systemId;
         this.privilege = privilege;
@@ -53,7 +52,7 @@ public class PpmsUserPrivilege {
      * Returns privilege.
      * @return the privilege
      */
-    public PpmsSystemPrivilege getPrivilege() {
+    public PpmsPrivilege getPrivilege() {
         return privilege;
     }
 
@@ -61,7 +60,7 @@ public class PpmsUserPrivilege {
      * Sets privilege.
      * @param privilege the privilege to set
      */
-    public void setPrivilege(PpmsSystemPrivilege privilege) {
+    public void setPrivilege(PpmsPrivilege privilege) {
         this.privilege = privilege;
     }
 
