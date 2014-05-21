@@ -13,7 +13,7 @@ import java.util.Scanner;
 import org.imagopole.ppms.api.convert.PumapiDataConverter;
 import org.imagopole.ppms.api.dto.PpmsPrivilege;
 import org.imagopole.ppms.api.dto.PpmsUserPrivilege;
-import org.imagopole.ppms.util.PumapiUtil;
+import org.imagopole.ppms.util.Check;
 
 /**
  * PUMAPI data converter: maps a response body to an indexed list of instruments identifiers
@@ -28,21 +28,31 @@ import org.imagopole.ppms.util.PumapiUtil;
  * @author seb
  * @see java.util.Scanner
  */
-public class GetUserRightsCsvResponseConverter
+public class GetUserRightsResponseConverter
        implements PumapiDataConverter<String, List<PpmsUserPrivilege>> {
 
-    /** Record separator for the <code>getuserrights</code> API call.
-     *  Note: breaking change from PUMAPI 2013.2 (':') to 2014 (',') */
-    private final static String RECORDS_SEPARATOR = PumapiUtil.COMMA.toString();
-
-    /** The <code>getuserrights</code> API call currently provides a tuple per line */
+    /** The <code>getuserrights</code> API call currently provides a tuple per line. */
     private final static int MIN_RECORDS_PER_LINE = 2;
 
+    /** Record separator for the <code>getuserrights</code> API call.
+     *  May be a comma or a colon. */
+    private Character recordsSeparator;
+
     /**
-     * Vanilla constructor
+     * Vanilla constructor.
      */
-    public GetUserRightsCsvResponseConverter() {
+    public GetUserRightsResponseConverter() {
         super();
+    }
+
+    /**
+     * Parameterized constructor.
+     */
+    public GetUserRightsResponseConverter(Character recordsSeparator) {
+        super();
+
+        Check.notNull(recordsSeparator, "recordsSeparator");
+        this.recordsSeparator = recordsSeparator;
     }
 
     @Override
@@ -73,7 +83,7 @@ public class GetUserRightsCsvResponseConverter
         PpmsUserPrivilege result = null;
 
         if (null != sanitizedLine && !sanitizedLine.isEmpty()) {
-            String[] lineParts = sanitizedLine.split(RECORDS_SEPARATOR);
+            String[] lineParts = sanitizedLine.split(getRecordsSeparator().toString());
 
             if (null != lineParts && lineParts.length >= MIN_RECORDS_PER_LINE) {
                 String privilegeCode = lineParts[0];
@@ -106,6 +116,22 @@ public class GetUserRightsCsvResponseConverter
         }
 
         return result;
+    }
+
+    /**
+     * Returns recordsSeparator.
+     * @return the recordsSeparator
+     */
+    public Character getRecordsSeparator() {
+        return recordsSeparator;
+    }
+
+    /**
+     * Sets recordsSeparator.
+     * @param recordsSeparator the recordsSeparator to set
+     */
+    public void setRecordsSeparator(Character recordsSeparator) {
+        this.recordsSeparator = recordsSeparator;
     }
 
 }

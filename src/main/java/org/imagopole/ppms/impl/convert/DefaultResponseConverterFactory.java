@@ -4,10 +4,13 @@
 package org.imagopole.ppms.impl.convert;
 
 import static org.imagopole.ppms.util.Check.empty;
+import static org.imagopole.ppms.util.PumapiUtil.COLON;
+import static org.imagopole.ppms.util.PumapiUtil.COMMA;
 
 import org.imagopole.ppms.api.PumapiRequest;
 import org.imagopole.ppms.api.PumapiRequest.Action;
 import org.imagopole.ppms.api.PumapiRequest.Filter;
+import org.imagopole.ppms.api.PumapiRequest.Format;
 import org.imagopole.ppms.api.convert.PumapiDataConverter;
 import org.imagopole.ppms.api.convert.PumapiResponseConverterFactory;
 import org.imagopole.ppms.util.Check;
@@ -38,10 +41,12 @@ public class DefaultResponseConverterFactory implements PumapiResponseConverterF
         Check.notNull(forSourceObject, "forSourceObject");
 
         Action action = forSourceObject.getAction();
+        Format format = forSourceObject.getResponseFormat();
         Check.notNull(action, "action");
 
         //TODO: take this into account when PUMAPI fully supports it
         boolean isNoHeaders = forSourceObject.isNoHeaders();
+        boolean isCsv = (null != format && Format.csv.equals(format));
 
         PumapiDataConverter<String, ?> result = null;
 
@@ -68,7 +73,11 @@ public class DefaultResponseConverterFactory implements PumapiResponseConverterF
                 break;
 
             case GetUserRights:
-                result = new GetUserRightsColonResponseConverter();
+                if (isCsv) {
+                    result = new GetUserRightsResponseConverter(COMMA);
+                } else {
+                    result = new GetUserRightsResponseConverter(COLON);
+                }
                 break;
 
             case GetSystems:
@@ -88,8 +97,8 @@ public class DefaultResponseConverterFactory implements PumapiResponseConverterF
                                   action, forSourceObject.getResponseFormat()));
         }
 
-        log.debug("[pumapi] Using response converter: {} for request action: {} [noheader:{}]",
-                  result.getClass().getSimpleName(), action, isNoHeaders);
+        log.debug("[pumapi] Using response converter: {} for request action: {} [noheader:{} - format:{}]",
+                  result.getClass().getSimpleName(), action, isNoHeaders, format);
 
         return result;
     }

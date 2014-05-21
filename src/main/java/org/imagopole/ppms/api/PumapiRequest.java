@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
-
 import org.imagopole.ppms.api.config.PumapiConfig;
 import org.imagopole.ppms.util.Check;
 
@@ -54,7 +53,7 @@ public class PumapiRequest {
     }
 
     public PumapiRequest toCsv() {
-        addKeyValuePair(GlobalParams.FORMAT, "csv");
+        addKeyValuePair(GlobalParams.FORMAT, Format.csv.name());
         return this;
     }
 
@@ -86,8 +85,15 @@ public class PumapiRequest {
         this.parameterMap.put(key, value);
     }
 
-    public String getResponseFormat() {
-        return this.parameterMap.get(GlobalParams.FORMAT);
+    public Format getResponseFormat() {
+        Format result = null;
+
+        String formatParam = this.parameterMap.get(GlobalParams.FORMAT);
+        if (null != formatParam) {
+            result = Format.valueOf(formatParam);
+        }
+
+        return result;
     }
 
     public boolean isNoHeaders() {
@@ -133,6 +139,11 @@ public class PumapiRequest {
         private GlobalParams() {
             super();
         }
+    }
+
+    public enum Format {
+        csv,
+        json
     }
 
     /**

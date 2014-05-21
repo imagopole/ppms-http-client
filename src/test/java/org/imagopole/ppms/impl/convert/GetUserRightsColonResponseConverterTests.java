@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.imagopole.ppms.api.dto.PpmsPrivilege;
 import org.imagopole.ppms.api.dto.PpmsUserPrivilege;
-import org.imagopole.ppms.impl.convert.GetUserRightsColonResponseConverter;
+import org.imagopole.ppms.util.PumapiUtil;
 import org.testng.annotations.Test;
 
 /**
@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
  */
 public class GetUserRightsColonResponseConverterTests {
 
-    private GetUserRightsColonResponseConverter converter = new GetUserRightsColonResponseConverter();
+    private GetUserRightsResponseConverter converter = new GetUserRightsResponseConverter(PumapiUtil.COLON);
 
     @Test
     public void shouldConvertNullToEmptyList() {

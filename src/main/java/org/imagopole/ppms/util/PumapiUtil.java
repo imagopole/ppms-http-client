@@ -12,6 +12,9 @@ public class PumapiUtil {
     /** CSV fields delimiter character */
     public final static Character COMMA = ',';
 
+    /** CSV fields delimiter character */
+    public final static Character COLON = ':';
+
     /** Private constructor (utility class) */
     private PumapiUtil() {
         super();

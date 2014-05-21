@@ -8,7 +8,8 @@ import java.util.List;
 
 import org.imagopole.ppms.api.dto.PpmsPrivilege;
 import org.imagopole.ppms.api.dto.PpmsUserPrivilege;
-import org.imagopole.ppms.impl.convert.GetUserRightsCsvResponseConverter;
+import org.imagopole.ppms.impl.convert.GetUserRightsResponseConverter;
+import org.imagopole.ppms.util.PumapiUtil;
 import org.testng.annotations.Test;
 
 /**
@@ -18,7 +19,7 @@ import org.testng.annotations.Test;
  */
 public class GetUserRightsCsvResponseConverterTests {
 
-    private GetUserRightsCsvResponseConverter converter = new GetUserRightsCsvResponseConverter();
+    private GetUserRightsResponseConverter converter = new GetUserRightsResponseConverter(PumapiUtil.COMMA);
 
     @Test
     public void shouldConvertNullToEmptyList() {
