@@ -16,6 +16,7 @@ import org.imagopole.ppms.api.convert.PumapiDataConverter;
 import org.imagopole.ppms.api.convert.PumapiResponseConverterFactory;
 import org.imagopole.ppms.api.dto.PpmsGroup;
 import org.imagopole.ppms.api.dto.PpmsSystem;
+import org.imagopole.ppms.api.dto.PpmsSystemPrivilege;
 import org.imagopole.ppms.api.dto.PpmsUser;
 import org.imagopole.ppms.api.dto.PpmsUserPrivilege;
 import org.imagopole.ppms.util.Check;
@@ -212,6 +213,25 @@ public class PumapiBufferedHttpClient implements PumapiClient {
                 .withFilter(Filter.Id, systemId.toString());
 
         PpmsSystem result = (PpmsSystem) invokeAndConvert(request);
+
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<PpmsSystemPrivilege> getSystemRights(Long systemId) throws PumapiException {
+        Check.notNull(systemId, "systemId");
+
+        final PumapiRequest request =
+            newRequest()
+                .forAction(Action.GetSystemRights)
+                .withFilter(Filter.Id, systemId.toString());
+
+        // retrieve all granted users for the given system
+        List<PpmsSystemPrivilege> result = (List<PpmsSystemPrivilege>) invokeAndConvert(request);
 
         return result;
     }

@@ -201,6 +201,7 @@ public class PumapiRequest {
         GetGroups("getgroups"),
         GetGroup("getgroup"),
         GetSystems("getsystems"),
+        GetSystemRights("getsysrights"),
         Authenticate("auth");
 
         /** PUMAPI call identifier */

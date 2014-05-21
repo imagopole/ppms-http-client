@@ -91,6 +91,14 @@ public class DefaultResponseConverterFactory implements PumapiResponseConverterF
                 }
                 break;
 
+            case GetSystemRights:
+                if (isCsv) {
+                    result = new GetSystemRightsResponseConverter(COMMA);
+                } else {
+                    result = new GetSystemRightsResponseConverter(COLON);
+                }
+                break;
+
             default:
                 throw new IllegalStateException(
                     String.format("No response converter for PUMAPI request with action: %s and format: %s",

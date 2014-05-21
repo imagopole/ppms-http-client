@@ -5,47 +5,47 @@ package org.imagopole.ppms.api.dto;
 
 
 /**
- * A PPMS user right entity as returned by PUMAPI (ie. granted instrument record for a given user).
+ * A PPMS system right entity as returned by PUMAPI (ie. associated user record for a given instrument).
  *
  * @author seb
  *
  */
-public class PpmsUserPrivilege {
+public class PpmsSystemPrivilege {
 
-    private Long systemId;
+    private String username;
     private PpmsPrivilege privilege;
 
     /**
      *
      */
-    public PpmsUserPrivilege() {
+    public PpmsSystemPrivilege() {
         super();
     }
 
     /**
-     * @param systemId
+     * @param username
      * @param privilege
      */
-    public PpmsUserPrivilege(Long systemId, PpmsPrivilege privilege) {
+    public PpmsSystemPrivilege(String username, PpmsPrivilege privilege) {
         super();
-        this.systemId = systemId;
+        this.username = username;
         this.privilege = privilege;
     }
 
     /**
-     * Returns systemId.
-     * @return the systemId
+     * Returns userLogin.
+     * @return the userLogin
      */
-    public Long getSystemId() {
-        return systemId;
+    public String getUsername() {
+        return username;
     }
 
     /**
-     * Sets systemId.
-     * @param systemId the systemId to set
+     * Sets userLogin.
+     * @param userLogin the userLogin to set
      */
-    public void setSystemId(Long systemId) {
-        this.systemId = systemId;
+    public void setUsername(String userLogin) {
+        this.username = userLogin;
     }
 
     /**
