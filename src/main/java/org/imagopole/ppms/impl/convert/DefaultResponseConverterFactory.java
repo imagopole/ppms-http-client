@@ -52,6 +52,10 @@ public class DefaultResponseConverterFactory implements PumapiResponseConverterF
                 result = new GetGroupCsvResponseConverter();
                 break;
 
+            case GetGroups:
+                result = new StringListCsvResponseConverter();
+                break;
+
             case GetUser:
                 result = new GetUserCsvResponseConverter();
                 break;
@@ -61,7 +65,7 @@ public class DefaultResponseConverterFactory implements PumapiResponseConverterF
                 break;
 
             case GetUsers:
-                result = new GetUsersCsvResponseConverter();
+                result = new StringListCsvResponseConverter();
                 break;
 
             case GetSystem:

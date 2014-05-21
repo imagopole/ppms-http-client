@@ -75,6 +75,20 @@ public interface PumapiClient {
     //List<String> getUserProjects(String login) throws PumapiException;
 
     /**
+     * Retrieves a list of PPMS groups (a.k.a unit) identifiers (a.k.a unitlogin), possibly filtered
+     * according to their activity status.
+     *
+     * If the <code>active</code> parameter is null, all group unitlogins are looked up.
+     *
+     * @param active may be null - status filter
+     * @return a list of group unitlogins, or an empty list if none found
+     * @throws PumapiException in case of an underlying error (API or technical)
+     *
+     * @see <code>getgroups</code> PUMAPI action
+     */
+    List<String> getGroups(Boolean active) throws PumapiException;
+
+    /**
      * Retrieves a PPMS group (a.k.a unit) by unit login.
      * If the group/unit is not found, returns null.
      *

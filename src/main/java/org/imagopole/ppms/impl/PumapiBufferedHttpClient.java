@@ -152,6 +152,24 @@ public class PumapiBufferedHttpClient implements PumapiClient {
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("unchecked")
+    public List<String> getGroups(Boolean active) throws PumapiException {
+
+        final PumapiRequest request = newRequest().forAction(Action.GetGroups);
+
+        if (null != active) {
+            request.withFilter(Filter.Active, active.toString().toLowerCase());
+        }
+
+        List<String> result = (List<String>) invokeAndConvert(request);
+
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public PpmsGroup getGroup(String unitLogin) throws PumapiException {
         Check.notEmpty(unitLogin, "unitLogin");
 

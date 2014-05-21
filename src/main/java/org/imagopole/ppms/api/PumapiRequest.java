@@ -182,6 +182,7 @@ public class PumapiRequest {
         GetUsers("getusers"),
         GetUser("getuser"),
         GetUserRights("getuserrights"),
+        GetGroups("getgroups"),
         GetGroup("getgroup"),
         GetSystem("getsystems"),
         Authenticate("auth");

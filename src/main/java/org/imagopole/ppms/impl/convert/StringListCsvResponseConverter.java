@@ -23,13 +23,13 @@ import org.imagopole.ppms.api.convert.PumapiDataConverter;
  * @see java.util.Scanner
  *
  */
-public class GetUsersCsvResponseConverter
+public class StringListCsvResponseConverter
        implements PumapiDataConverter<String, List<String>> {
 
     /**
      * Vanilla constructor
      */
-    public GetUsersCsvResponseConverter() {
+    public StringListCsvResponseConverter() {
         super();
     }
 

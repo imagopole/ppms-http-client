@@ -61,7 +61,7 @@ public class PumapiHcFluentClientInvoker implements PumapiHttpInvoker {
      * {@inheritDoc}
      */
     @Override
-    public String executePost(String url, PumapiRequest pumapiRequest) {
+    public String executePost(String url, PumapiRequest pumapiRequest) throws PumapiException {
         Check.notEmpty(url, "url");
         Check.notNull(pumapiRequest, "pumapiRequest");
 

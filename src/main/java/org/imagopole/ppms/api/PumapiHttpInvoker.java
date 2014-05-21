@@ -18,7 +18,8 @@ public interface PumapiHttpInvoker {
      * @param url the PUMAPI endpoint URL
      * @param pumapiRequest the PUMAPI request
      * @return the response body as String
+     * @throws PumapiException in case of an underlying error (API or technical)
      */
-    String executePost(String url, PumapiRequest pumapiRequest);
+    String executePost(String url, PumapiRequest pumapiRequest) throws PumapiException;
 
 }

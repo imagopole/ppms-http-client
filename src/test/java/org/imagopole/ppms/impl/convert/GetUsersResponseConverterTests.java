@@ -7,7 +7,7 @@ import static org.testng.Assert.assertTrue;
 import java.util.Collection;
 import java.util.List;
 
-import org.imagopole.ppms.impl.convert.GetUsersCsvResponseConverter;
+import org.imagopole.ppms.impl.convert.StringListCsvResponseConverter;
 import org.testng.annotations.Test;
 
 /**
@@ -19,7 +19,7 @@ public class GetUsersResponseConverterTests {
 
     @Test
     public void shouldConvertNullToEmptyList() {
-        Collection<String> result = new GetUsersCsvResponseConverter().map(null);
+        Collection<String> result = new StringListCsvResponseConverter().map(null);
 
         assertNotNull(result, "Non-null result expected");
         assertTrue(result.isEmpty(), "Empty result expected");
@@ -27,7 +27,7 @@ public class GetUsersResponseConverterTests {
 
     @Test
     public void shouldConvertBlankToEmptyList() {
-        Collection<String> result = new GetUsersCsvResponseConverter().map("");
+        Collection<String> result = new StringListCsvResponseConverter().map("");
 
         assertNotNull(result, "Non-null result expected");
         assertTrue(result.isEmpty(), "Empty result expected");
@@ -35,7 +35,7 @@ public class GetUsersResponseConverterTests {
 
     @Test
     public void shouldConvertWhitespaceToEmptyList() {
-        Collection<String> result = new GetUsersCsvResponseConverter().map("    ");
+        Collection<String> result = new StringListCsvResponseConverter().map("    ");
 
         assertNotNull(result, "Non-null result expected");
         assertTrue(result.isEmpty(), "Empty result expected");
@@ -43,7 +43,7 @@ public class GetUsersResponseConverterTests {
 
     @Test
     public void shouldRemoveCarriageReturns() {
-        List<String> result = new GetUsersCsvResponseConverter().map("cr.start \r cr.end");
+        List<String> result = new StringListCsvResponseConverter().map("cr.start \r cr.end");
 
         assertNotNull(result, "Non-null result expected");
         assertTrue(result.size() == 2, "Two lines expected");
@@ -53,7 +53,7 @@ public class GetUsersResponseConverterTests {
 
     @Test
     public void shouldRemoveLineFeeds() {
-        List<String> result = new GetUsersCsvResponseConverter().map("lf.start \n lf.end");
+        List<String> result = new StringListCsvResponseConverter().map("lf.start \n lf.end");
 
         assertNotNull(result, "Non-null result expected");
         assertTrue(result.size() == 2, "Two lines expected");
@@ -63,7 +63,7 @@ public class GetUsersResponseConverterTests {
 
     @Test
     public void shouldRemoveEndOfLines() {
-        List<String> result = new GetUsersCsvResponseConverter().map("crlf.start \r\n crlf.end");
+        List<String> result = new StringListCsvResponseConverter().map("crlf.start \r\n crlf.end");
 
         assertNotNull(result, "Non-null result expected");
         assertTrue(result.size() == 2, "Two lines expected");
@@ -73,7 +73,7 @@ public class GetUsersResponseConverterTests {
 
     @Test
     public void shouldRemoveTrailingSpaces() {
-        List<String> result = new GetUsersCsvResponseConverter().map("  trail.start with.trailing.space+eol \r\n  ");
+        List<String> result = new StringListCsvResponseConverter().map("  trail.start with.trailing.space+eol \r\n  ");
 
         assertNotNull(result, "Non-null result expected");
         assertTrue(result.size() == 1, "One line expected");
