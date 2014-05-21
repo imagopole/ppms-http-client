@@ -100,6 +100,26 @@ public interface PumapiClient {
      */
     PpmsGroup getGroup(String unitLogin) throws PumapiException;
 
+    /**
+     * Retrieves a list of all available PPMS instruments (a.k.a systems).
+     *
+     * <strong>Note:</strong> currently undocumented PUMAPI action.
+     *
+     * @return a list of systems, or an empty list if none found
+     * @throws PumapiException in case of an underlying error (API or technical)
+     */
+    List<PpmsSystem> getSystems() throws PumapiException;
+
+    /**
+     * Retrieves a PPMS instruments (a.k.a systems) by id.
+     * If the system is not found, returns null.
+     *
+     * <strong>Note:</strong> currently undocumented PUMAPI action.
+     *
+     * @param systemId the PPMS system identifier
+     * @return the instrument's attributes or null if not found.
+     * @throws PumapiException in case of an underlying error (API or technical)
+     */
     PpmsSystem getSystem(Long systemId) throws PumapiException;
 
     /**

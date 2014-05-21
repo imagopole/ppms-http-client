@@ -112,6 +112,11 @@ public class PumapiRequest {
         return result;
     }
 
+    public String getFilterValue(Filter filter) {
+        Check.notNull(filter, "filter");
+        return this.parameterMap.get(filter.getPumapiName());
+    }
+
     /**
      * Constants for PUMAPI global parameter keys.
      *
@@ -184,7 +189,7 @@ public class PumapiRequest {
         GetUserRights("getuserrights"),
         GetGroups("getgroups"),
         GetGroup("getgroup"),
-        GetSystem("getsystems"),
+        GetSystems("getsystems"),
         Authenticate("auth");
 
         /** PUMAPI call identifier */

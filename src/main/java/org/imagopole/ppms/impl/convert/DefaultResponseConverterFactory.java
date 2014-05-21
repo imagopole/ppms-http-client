@@ -3,8 +3,11 @@
  */
 package org.imagopole.ppms.impl.convert;
 
+import static org.imagopole.ppms.util.Check.empty;
+
 import org.imagopole.ppms.api.PumapiRequest;
 import org.imagopole.ppms.api.PumapiRequest.Action;
+import org.imagopole.ppms.api.PumapiRequest.Filter;
 import org.imagopole.ppms.api.convert.PumapiDataConverter;
 import org.imagopole.ppms.api.convert.PumapiResponseConverterFactory;
 import org.imagopole.ppms.util.Check;
@@ -60,16 +63,23 @@ public class DefaultResponseConverterFactory implements PumapiResponseConverterF
                 result = new GetUserCsvResponseConverter();
                 break;
 
-            case GetUserRights:
-                result = new GetUserRightsColonResponseConverter();
-                break;
-
             case GetUsers:
                 result = new StringListCsvResponseConverter();
                 break;
 
-            case GetSystem:
-                result = new GetSystemCsvResponseConverter();
+            case GetUserRights:
+                result = new GetUserRightsColonResponseConverter();
+                break;
+
+            case GetSystems:
+                String systemIdFilter = forSourceObject.getFilterValue(Filter.Id);
+
+                if (empty(systemIdFilter)) {
+                    // no filter: all systems requested
+                    result = new GetSystemsCsvResponseConverter();
+                } else {
+                    result = new GetSystemCsvResponseConverter();
+                }
                 break;
 
             default:

@@ -52,10 +52,10 @@ public final class Check {
         }
     }
 
-    public final static void strictlyPositive(Integer number, String argName) {
+    public final static void strictlyPositive(Number number, String argName) {
         Check.notNull(number, argName);
 
-        if (number < 1) {
+        if (number.intValue() < 1) {
             throw new IllegalArgumentException(
                 String.format("Condition not met - expected : strictly positive number for %s", argName));
         }

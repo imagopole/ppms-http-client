@@ -9,6 +9,7 @@ import org.imagopole.ppms.TestsUtil.TestKeys;
 import org.imagopole.ppms.api.dto.PpmsSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
@@ -37,7 +38,22 @@ public class GetSystemTests extends AbstractPumapiTest {
         } else {
             log.warn(String.format("No value for test key: %s - skipping integration test", TestKeys.UNIT_LOGIN));
         }
+    }
 
+    @Test(expectedExceptions = { IllegalArgumentException.class },
+          expectedExceptionsMessageRegExp = "^Condition not met - expected : .* for systemId",
+          dataProvider = "invalidSystemIdsDataProvider")
+    public void getInvalidSystemRequestShouldFail(Long systemId) {
+        getClient().getSystem(systemId);
+    }
+
+    @DataProvider(name="invalidSystemIdsDataProvider")
+    private Object[][] provideInvalidSystemIds() {
+        return new Object[][] {
+            { null },
+            { -1L  },
+            { 0L   }
+        };
     }
 
 }

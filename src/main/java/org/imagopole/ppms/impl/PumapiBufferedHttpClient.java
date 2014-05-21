@@ -188,13 +188,27 @@ public class PumapiBufferedHttpClient implements PumapiClient {
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("unchecked")
+    public List<PpmsSystem> getSystems() throws PumapiException {
+        final PumapiRequest request = newRequest().forAction(Action.GetSystems);
+
+        List<PpmsSystem> result = (List<PpmsSystem>) invokeAndConvert(request);
+
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public PpmsSystem getSystem(Long systemId) throws PumapiException {
-        Check.notNull(systemId, "systemId");
+        // caution: the "getsystems" action returns _all_ systems when id <= 0
+        Check.strictlyPositive(systemId, "systemId");
 
         final PumapiRequest request =
             newRequest()
                 .toCsv()
-                .forAction(Action.GetSystem)
+                .forAction(Action.GetSystems)
                 .withFilter(Filter.Id, systemId.toString());
 
         PpmsSystem result = (PpmsSystem) invokeAndConvert(request);
