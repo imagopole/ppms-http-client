@@ -19,22 +19,20 @@ public final class Check {
     }
 
     public static final boolean empty(String input) {
-        return (null == input || input.isEmpty());
+        return (null == input || input.trim().isEmpty());
     }
 
     public final static void notNull(Object obj, String argName) {
         if (null == obj) {
-            throw new IllegalArgumentException(
-                "Condition not met - expected : non-null parameter for " + argName);
+            rejectEmptyParam(argName);
         }
     }
 
     public final static void notEmpty(String obj, String argName) {
         Check.notNull(obj, argName);
 
-        if (obj.trim().length() == 0) {
-            throw new IllegalArgumentException(
-                "Condition not met - expected : non-empty parameter for " + argName);
+        if (empty(obj)) {
+            rejectEmptyParam(argName);
         }
     }
 
@@ -42,8 +40,7 @@ public final class Check {
         Check.notNull(obj, argName);
 
         if (obj.keySet().isEmpty()) {
-            throw new IllegalArgumentException(
-                "Condition not met - expected : non-empty parameter for " + argName);
+            rejectEmptyParam(argName);
         }
     }
 
@@ -51,8 +48,7 @@ public final class Check {
         Check.notNull(obj, argName);
 
         if (obj.isEmpty()) {
-            throw new IllegalArgumentException(
-                "Condition not met - expected : non-empty parameter for " + argName);
+            rejectEmptyParam(argName);
         }
     }
 
@@ -61,7 +57,12 @@ public final class Check {
 
         if (number < 1) {
             throw new IllegalArgumentException(
-                "Condition not met - expected : strictly positive number for " + argName);
+                String.format("Condition not met - expected : strictly positive number for %s", argName));
         }
+    }
+
+    private static void rejectEmptyParam(String argName) throws IllegalArgumentException {
+        throw new IllegalArgumentException(
+            String.format("Condition not met - expected : non-empty parameter for %s", argName));
     }
 }
