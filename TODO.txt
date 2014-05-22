@@ -1,0 +1,5 @@
+- Add JSON support?
+- Check out (API + dependencies?):
+  - https://jersey.java.net/documentation/latest/client.html
+  - http://cxf.apache.org/docs/jax-rs-client-api.html
+  - http://docs.spring.io/spring/docs/3.0.x/reference/remoting.html#rest-client-access
