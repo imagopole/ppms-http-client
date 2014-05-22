@@ -5,6 +5,7 @@ package org.imagopole.ppms.impl.convert;
 
 import static org.imagopole.ppms.util.Check.empty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.csveed.api.CsvReader;
@@ -33,7 +34,7 @@ public class GetSystemsCsvResponseConverter extends AbstractPpmsSystemCsvConvert
      */
     @Override
     public List<PpmsSystem> map(String input) {
-        List<PpmsSystem> result = null;
+        List<PpmsSystem> result = new ArrayList<PpmsSystem>();
 
         if (!empty(input)) {
 
