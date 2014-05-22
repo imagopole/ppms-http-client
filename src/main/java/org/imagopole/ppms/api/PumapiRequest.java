@@ -58,10 +58,9 @@ public class PumapiRequest {
     }
 
     public PumapiRequest toCsvNoHeaders() {
-        throw new UnsupportedOperationException("Not implemented / not fully supported by PUMAPI?");
-//        this.toCsv();
-//        addKeyValuePair(GlobalParams.NO_HEADERS, "true");
-//        return this;
+        this.toCsv();
+        addKeyValuePair(GlobalParams.NO_HEADERS, "true");
+        return this;
     }
 
     public Map<String, String> getParameterMap() {
