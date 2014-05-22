@@ -1,0 +1,56 @@
+= PPMS HTTP Client Configuration
+Imagopole
+:fluent_hc_executor_url:  https://github.com/apache/httpclient/blob/4.3.3/fluent-hc/src/main/java/org/apache/http/client/fluent/Executor.java#L94-L97
+:pool_client_cnx_mgr_url: https://github.com/apache/httpclient/blob/4.3.3/httpclient/src/main/java/org/apache/http/impl/conn/PoolingHttpClientConnectionManager.java
+:request_so_timeout_url:  https://github.com/apache/httpclient/blob/4.3.3/httpclient/src/main/java/org/apache/http/client/config/RequestConfig.java#L252-L264
+:request_con_timeout_url: https://github.com/apache/httpclient/blob/4.3.3/httpclient/src/main/java/org/apache/http/client/config/RequestConfig.java#L239-L250
+:request_config_url:      https://github.com/apache/httpclient/blob/4.3.3/httpclient/src/main/java/org/apache/http/client/config/RequestConfig.java#L334-L344
+:jsse_guide_url:          http://docs.oracle.com/javase/7/docs/technotes/guides/security/jsse/JSSERefGuide.html#SystemProps
+:source-highlighter:      prettify
+:icons:                   font
+:toc:
+
+
+== Quickref
+
+=== Config properties
+
+[width="100%", cols="25,25,50", options="header"]
+|==========================================================================================================================================
+|Setting                        |Format                        |Description
+|+pumapi.endpoint+              |https://some.host.tld/pumapi/ |PUMAPI service URL
+|+pumapi.api_key+               |string                        |PUMAPI multi-facilities API key
+|+pumapi.proxy_host+            |localhost                     |HTTP(S) proxy hostname
+|+pumapi.proxy_port+            |8080                          |HTTP(S) proxy port number
+|+pumapi.connect_timeout+       |3000                          |HTTP request {request_con_timeout_url}[connect timeout] in milliseconds
+|+pumapi.socket_timeout+        |1000                          |HTTP request {request_so_timeout_url}[socket timeout] in milliseconds
+|==========================================================================================================================================
+
+NOTE: The underlying fluent HttpClient uses an
+      {pool_client_cnx_mgr_url}[+org.apache.http.impl.conn.PoolingHttpClientConnectionManager+]
+      by default, with a maximum of 100 connections per route and 200 maximum total number of connections,
+      and default system timeouts.
+      See: {fluent_hc_executor_url}[Executor] and {request_config_url}[RequestConfig].
+
+TIP: For SSL configuration settings (eg. +javax.net.ssl.keyStore+, +javax.net.ssl.trustStore+,
+     +javax.net.debug+) see the JVM {jsse_guide_url}[JSSE Guide].
+
+=== Logging
+
+[source,xml]
+.logback.xml
+----
+<!-- PPMS HTTP client -->
+<logger name="org.imagopole.ppms" level="info"/>
+
+<!-- Apache Commons HTTP client -->
+<logger name="org.apache.http.client.fluent" level="info"/>
+<logger name="org.apache.http.impl.client" level="info"/>
+
+<!-- Apache Commons HTTP client extras -->
+<logger name="org.apache.http.wire" level="info"/>
+<logger name="org.apache.http.headers" level="info"/>
+
+<!-- CSV response bean mapping -->
+<logger name="org.csveed" level="info"/>
+----

@@ -7,6 +7,7 @@ apply plugin: 'pmd'
 apply plugin: 'checkstyle'
 apply plugin: 'project-report' // gradle-1.9 feature
 apply plugin: 'jacoco'         // gradle-1.9 incubating
+apply plugin: 'asciidoctor'
 
 
 /********************************/
@@ -49,6 +50,7 @@ repositories {
     mavenLocal()
     mavenCentral()
 }
+
 
 /**
  * Reminder: all dependencies must remain in line with OMERO's runtime classpath
@@ -102,6 +104,7 @@ task unitTest(type: Test) {
     systemProperty 'PUMAPI_CONFIG',          System.getenv("PUMAPI_CONFIG")
     systemProperty 'pumapi.config.location', System.getProperty("user.home") + '/pumapi-local.properties'
 }
+
 
 /********************************/
 /**** Plugins configuration ****/
@@ -158,18 +161,54 @@ jacocoTestReport {
     additionalSourceDirs = files(sourceSets.main.allJava.srcDirs)
 }
 
+asciidoctor {
+    sourceDir = file("docs/asciidoc")
+    backend   = "html5"
+}
+
+
 /*********************************************/
 /**** Custom tasks/project configuration ****/
 
 /** Create a distribution bundle with runtime dependencies included */
 task distributionZip(type: Zip) { zipTask ->
+
+    dependsOn asciidoctor
+
     classifier = 'dist-with-dependencies'
 
+    into ("lib") {
+        from configurations.runtime
+    }
+    into ("docs") {
+        from "$buildDir/asciidoc"
+    }
     from configurations.runtime.allArtifacts.files
-    from configurations.runtime
     from fileTree("$projectDir").include(["*.md", "LICENSE.txt"])
 }
 
 artifacts {
     //archives distributionZip
+}
+
+
+/**************************************/
+/**** Build plugins configuration ****/
+
+buildscript {
+    ext.pluginsVersions = [
+        asciidoctor : '0.7.0'
+    ]
+
+    repositories {
+        jcenter()
+        maven {
+            name 'Bintray Asciidoctor repo'
+            url  'http://dl.bintray.com/content/aalmiray/asciidoctor'
+        }
+    }
+
+    dependencies {
+        classpath 'org.asciidoctor:asciidoctor-gradle-plugin:' + pluginsVersions.asciidoctor
+    }
 }
