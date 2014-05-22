@@ -34,7 +34,7 @@ public class PumapiBufferedHttpClient implements PumapiClient {
     /** Application logs. */
     private final Logger log = LoggerFactory.getLogger(PumapiBufferedHttpClient.class);
 
-    /** API configuration settings */
+    /** API configuration settings. */
     private PumapiConfig config;
 
     /** Remote calls handler. */
@@ -285,7 +285,9 @@ public class PumapiBufferedHttpClient implements PumapiClient {
         String responseContent =
             getHttpInvoker().executePost(getConfig().getEndpoint(), pumapiRequest);
 
-        log.trace("[pumapi] Received PUMAPI response: \n{}", responseContent);
+        if (log.isTraceEnabled()) {
+            log.trace("[pumapi] Received PUMAPI response: \n{}", responseContent);
+        }
 
         return responseContent;
     }

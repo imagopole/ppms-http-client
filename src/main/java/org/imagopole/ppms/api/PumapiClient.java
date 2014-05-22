@@ -33,7 +33,7 @@ public interface PumapiClient {
      * Defines client-wide API configuration parameters (eg. authentication
      * key, proxy settings, etc).
      *
-     * @param configProvider the PUMAPI configuration provider
+     * @param config the PUMAPI configuration provider
      */
     void setConfig(PumapiConfig config);
 
@@ -65,7 +65,8 @@ public interface PumapiClient {
      * Retrieves a list of (instrument, privilege level) pairs available to a given username.
      *
      * @param login the PPMS username
-     * @return a list of instrument identifiers with their associated privilege level, or an empty list if none found
+     * @return a list of instrument identifiers with their associated privilege level,
+     * or an empty list if none found
      * @throws PumapiException in case of an underlying error (API or technical)
      *
      * @see <code>getuserrights</code> PUMAPI action
@@ -126,7 +127,8 @@ public interface PumapiClient {
      * Retrieves a list of (username, privilege level) pairs available on a given instrument.
      *
      * @param systemId the PPMS system identifier
-     * @return a list of usernames with their associated privilege level, or an empty list if none found
+     * @return a list of usernames with their associated privilege level,
+     * or an empty list if none found
      * @throws PumapiException in case of an underlying error (API or technical)
      *
      * @see <code>getsysrights</code> PUMAPI action

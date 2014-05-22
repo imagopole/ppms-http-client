@@ -15,7 +15,7 @@ public enum PpmsPrivilege {
     Novice("N"),
     SuperUser("S");
 
-    /** PUMAPI response identifier */
+    /** PUMAPI response identifier. */
     private String pumapiName;
 
     private PpmsPrivilege(String name) {
@@ -26,7 +26,7 @@ public enum PpmsPrivilege {
         return pumapiName;
     }
 
-    public final static PpmsPrivilege fromString(String aName) {
+    public static final PpmsPrivilege fromString(String aName) {
         Check.notNull(aName, "aName");
 
         PpmsPrivilege result = null;

@@ -12,18 +12,18 @@ package org.imagopole.ppms.api;
  */
 public class PumapiException extends RuntimeException {
 
-    /** serialVersionUID */
+    /** serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
     /**
-     * Vanilla constructor
+     * Vanilla constructor.
      */
     public PumapiException() {
         super();
     }
 
     /**
-     * Parameterized constructor
+     * Parameterized constructor.
      *
      * @param message exception message
      */
@@ -32,7 +32,7 @@ public class PumapiException extends RuntimeException {
     }
 
     /**
-     * Parameterized constructor
+     * Parameterized constructor.
      *
      * @param cause root cause
      */
@@ -41,7 +41,7 @@ public class PumapiException extends RuntimeException {
     }
 
     /**
-     * Parameterized constructor
+     * Parameterized constructor.
      *
      * @param message exception message
      * @param cause root cause

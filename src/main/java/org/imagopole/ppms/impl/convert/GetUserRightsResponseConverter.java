@@ -32,7 +32,7 @@ public class GetUserRightsResponseConverter
        implements PumapiDataConverter<String, List<PpmsUserPrivilege>> {
 
     /** The <code>getuserrights</code> API call currently provides a tuple per line. */
-    private final static int MIN_RECORDS_PER_LINE = 2;
+    private static final int MIN_RECORDS_PER_LINE = 2;
 
     /** Record separator for the <code>getuserrights</code> API call.
      *  May be a comma or a colon. */

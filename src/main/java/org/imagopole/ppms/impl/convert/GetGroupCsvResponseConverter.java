@@ -27,7 +27,7 @@ public class GetGroupCsvResponseConverter
        implements PumapiDataConverter<String, PpmsGroup> {
 
     /**
-     * Vanilla constructor
+     * Vanilla constructor.
      */
     public GetGroupCsvResponseConverter() {
         super();
@@ -50,10 +50,6 @@ public class GetGroupCsvResponseConverter
         return result;
     }
 
-    /**
-     * @param input
-     * @return
-     */
     private CsvReader<PpmsGroup> buildCsvReader(String input) {
         Check.notEmpty(input, "input");
 

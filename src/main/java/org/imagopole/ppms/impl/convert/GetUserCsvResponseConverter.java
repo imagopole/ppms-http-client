@@ -20,14 +20,14 @@ import org.imagopole.ppms.util.PumapiUtil;
  * PUMAPI data converter: maps a response body to a PPMS user attributes.
  *
  * @author seb
- * @see CsvReader
+ * @see org.csveed.api.CsvReader
  *
  */
 public class GetUserCsvResponseConverter
        implements PumapiDataConverter<String, PpmsUser> {
 
     /**
-     * Vanilla constructor
+     * Vanilla constructor.
      */
     public GetUserCsvResponseConverter() {
         super();
@@ -50,10 +50,6 @@ public class GetUserCsvResponseConverter
         return result;
     }
 
-    /**
-     * @param input
-     * @return
-     */
     private CsvReader<PpmsUser> buildCsvReader(String input) {
         Check.notEmpty(input, "input");
 

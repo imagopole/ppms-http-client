@@ -18,10 +18,10 @@ public class AuthCsvResponseConverter
        implements PumapiDataConverter<String, Boolean> {
 
     /** PUMAPI returns 'OK' if authentication is successful (nothing otherwise). */
-    private final static String OK_RETURN_CODE = "OK";
+    private static final String OK_RETURN_CODE = "OK";
 
     /**
-     * Vanilla constructor
+     * Vanilla constructor.
      */
     public AuthCsvResponseConverter() {
         super();

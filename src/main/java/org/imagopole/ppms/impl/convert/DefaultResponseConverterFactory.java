@@ -18,6 +18,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Basic implementation for type converters lookup based on the request metedata.
+ *
  * @author seb
  *
  */

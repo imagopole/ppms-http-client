@@ -23,26 +23,26 @@ import org.slf4j.LoggerFactory;
  */
 public class PumapiConfig {
 
-    /** Remote endpoint URL */
+    /** Remote endpoint URL. */
     private String endpoint;
 
-    /** Authentication credentials */
+    /** Authentication credentials. */
     private String apiKey;
 
-    /** Proxy host setting */
+    /** Proxy host setting. */
     private String proxyHost;
 
-    /** Proxy port setting */
+    /** Proxy port setting. */
     private Integer proxyPort;
 
-    /** Socket read timeout */
+    /** Socket read timeout. */
     private Integer socketTimeout;
 
-    /** Socket connect timeout */
+    /** Socket connect timeout. */
     private Integer connectTimeout;
 
     /**
-     * Vanilla constructor
+     * Vanilla constructor.
      */
     public PumapiConfig() {
         super();
@@ -105,12 +105,12 @@ public class PumapiConfig {
      *
      */
     public static class Keys {
-        public final static String API_KEY         = "pumapi.api_key";
-        public final static String ENDPOINT        = "pumapi.endpoint";
-        public final static String PROXY_HOST      = "pumapi.proxy_host";
-        public final static String PROXY_PORT      = "pumapi.proxy_port";
-        public final static String CONNECT_TIMEOUT = "pumapi.connect_timeout";
-        public final static String SOCKET_TIMEOUT  = "pumapi.socket_timeout";
+        public static final String API_KEY         = "pumapi.api_key";
+        public static final String ENDPOINT        = "pumapi.endpoint";
+        public static final String PROXY_HOST      = "pumapi.proxy_host";
+        public static final String PROXY_PORT      = "pumapi.proxy_port";
+        public static final String CONNECT_TIMEOUT = "pumapi.connect_timeout";
+        public static final String SOCKET_TIMEOUT  = "pumapi.socket_timeout";
 
         /** Constants class. */
         private Keys() {
@@ -126,10 +126,10 @@ public class PumapiConfig {
      */
     private class ConfigValidator {
 
-        /** Issue a warning if the API key is surprisingly short */
-        private final static int MIN_API_KEY_LENGTH = 5;
+        /** Issue a warning if the API key is surprisingly short. */
+        private static final int MIN_API_KEY_LENGTH = 5;
 
-        /** Application logs */
+        /** Application logs. */
         private final Logger log = LoggerFactory.getLogger(ConfigValidator.class);
 
         private void validateOrFail(PumapiConfig config) throws IllegalArgumentException {
@@ -156,8 +156,8 @@ public class PumapiConfig {
             }
 
             if (apiKeyConfig.length() < MIN_API_KEY_LENGTH) {
-                log.warn("PUMAPI authentication key length too short - " +
-                         "please double check your config file (requests may be rejected)");
+                log.warn(
+                    "PUMAPI authentication key length too short - please check your config file");
             }
 
             // optional parameters: sanity checks only

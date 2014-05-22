@@ -4,26 +4,28 @@
 package org.imagopole.ppms.util;
 
 /**
+ * Misc utilities.
+ *
  * @author seb
  *
  */
-public class PumapiUtil {
+public final class PumapiUtil {
 
-    /** CSV fields delimiter character */
-    public final static Character COMMA = ',';
+    /** CSV fields delimiter character. */
+    public static final Character COMMA = ',';
 
-    /** CSV fields delimiter character */
-    public final static Character COLON = ':';
+    /** CSV fields delimiter character. */
+    public static final Character COLON = ':';
 
-    /** CSV fields quote character */
-    public final static Character DOUBLE_QUOTE = '"';
+    /** CSV fields quote character. */
+    public static final Character DOUBLE_QUOTE = '"';
 
-    /** Private constructor (utility class) */
+    /** Private constructor (utility class). */
     private PumapiUtil() {
         super();
     }
 
-    public final static String trimEol(String line) {
+    public static final String trimEol(String line) {
         String result = null;
 
         if (null != line) {
@@ -33,7 +35,7 @@ public class PumapiUtil {
         return result;
     }
 
-    public final static String trimAll(String line) {
+    public static final String trimAll(String line) {
         String result = line;
 
         if (null != line) {
@@ -43,7 +45,4 @@ public class PumapiUtil {
         return result;
     }
 
-    public static final boolean empty(String input) {
-        return (null == input || input.isEmpty());
-    }
 }

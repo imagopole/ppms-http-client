@@ -27,7 +27,7 @@ public class StringListCsvResponseConverter
        implements PumapiDataConverter<String, List<String>> {
 
     /**
-     * Vanilla constructor
+     * Vanilla constructor.
      */
     public StringListCsvResponseConverter() {
         super();

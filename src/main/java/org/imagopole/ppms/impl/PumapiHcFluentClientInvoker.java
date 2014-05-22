@@ -47,11 +47,11 @@ public class PumapiHcFluentClientInvoker implements PumapiHttpInvoker {
     /** PUMAPI response body token for error conditions detection. */
     private static final String ERROR_LOWERCASE = "error";
 
-    /** Application logs */
+    /** Application logs. */
     private final Logger log = LoggerFactory.getLogger(PumapiHcFluentClientInvoker.class);
 
     /**
-     * Vanilla constructor
+     * Vanilla constructor.
      */
     public PumapiHcFluentClientInvoker() {
         super();
@@ -198,7 +198,7 @@ public class PumapiHcFluentClientInvoker implements PumapiHttpInvoker {
         boolean result = false;
 
         if (null != responseBody) {
-            result = responseBody.startsWith(ERROR_LOWERCASE)|| responseBody.startsWith(ERROR_UPPERCASE);
+            result = responseBody.startsWith(ERROR_LOWERCASE) || responseBody.startsWith(ERROR_UPPERCASE);
         }
 
         return result;

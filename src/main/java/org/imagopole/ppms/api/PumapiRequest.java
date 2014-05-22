@@ -23,16 +23,16 @@ import org.imagopole.ppms.util.Check;
  */
 public class PumapiRequest {
 
-    /**  Client-wide API configuration parameters */
+    /**  Client-wide API configuration parameters. */
     private PumapiConfig clientConfig;
 
-    /** Request parameters as key-value pairs */
+    /** Request parameters as key-value pairs. */
     private Map<String, String> parameterMap;
 
     /**
      * Configuration-aware constructor.
      *
-     * @param clientConfig configuration settings
+     * @param config configuration settings
      */
     public PumapiRequest(PumapiConfig config) {
         super();
@@ -47,36 +47,68 @@ public class PumapiRequest {
         this.parameterMap = Collections.synchronizedMap(new TreeMap<String, String>());
     }
 
+    /**
+     * Uses the request's globally configured API key for authentication.
+     * @return this request instance
+     */
     public PumapiRequest withKeyAuth() {
         addKeyValuePair(GlobalParams.API_KEY, getClientConfig().getApiKey());
         return this;
     }
 
+    /**
+     * Uses the CSV response serialization format with header.
+     * @return this request instance
+     */
     public PumapiRequest toCsv() {
         addKeyValuePair(GlobalParams.FORMAT, Format.csv.name());
         return this;
     }
 
+    /**
+     * Uses the CSV response serialization format with no header.
+     * @return this request instance
+     */
     public PumapiRequest toCsvNoHeaders() {
         this.toCsv();
         addKeyValuePair(GlobalParams.NO_HEADERS, "true");
         return this;
     }
 
+    /**
+     * Returns a view on the current request's parameters.
+     * @return this request's parameters
+     */
     public Map<String, String> getParameterMap() {
         return Collections.unmodifiableMap(this.parameterMap);
     }
 
+    /**
+     * Defines the remote API action for this request.
+     * @param action the PUMAPI action
+     * @return this request instance
+     */
     public PumapiRequest forAction(Action action) {
         addKeyValuePair(GlobalParams.ACTION, action.getPumapiName());
         return this;
     }
 
+    /**
+     * Adds an action parameter for this request.
+     * @param filter the parameter key
+     * @param value the parameter value
+     * @return this request instance
+     */
     public PumapiRequest withFilter(Filter filter, String value) {
         addKeyValuePair(filter.getPumapiName(), value);
         return this;
     }
 
+    /**
+     * Adds an action parameter for this request.
+     * @param key the parameter key
+     * @param value he parameter value
+     */
     private void addKeyValuePair(String key, String value) {
         Check.notEmpty(key, "key");
         Check.notEmpty(value, String.format("value for key: %s", key));
@@ -84,6 +116,12 @@ public class PumapiRequest {
         this.parameterMap.put(key, value);
     }
 
+    /**
+     * Looks up the requested response format.
+     * May be null.
+     *
+     * @return the PUMAPI requested format
+     */
     public Format getResponseFormat() {
         Format result = null;
 
@@ -95,6 +133,10 @@ public class PumapiRequest {
         return result;
     }
 
+    /**
+     * Indicates whether the requested format is CSV without header.
+     * @return true if the request uses the CSV format with no header
+     */
     public boolean isNoHeaders() {
         boolean result = false;
 
@@ -106,6 +148,10 @@ public class PumapiRequest {
         return result;
     }
 
+    /**
+     * Looks up the requested action key for this request.
+     * @return the action enumeration
+     */
     public Action getAction() {
         Action result = null;
 
@@ -117,6 +163,11 @@ public class PumapiRequest {
         return result;
     }
 
+    /**
+     * Looks up the action parameter for this request.
+     * @param filter the parameter to lookup
+     * @return the parameter value, or null
+     */
     public String getFilterValue(Filter filter) {
         Check.notNull(filter, "filter");
         return this.parameterMap.get(filter.getPumapiName());
@@ -128,7 +179,7 @@ public class PumapiRequest {
      * @author seb
      *
      */
-    private class GlobalParams {
+    private final class GlobalParams {
         private static final String API_KEY = "apikey";
         private static final String FORMAT = "format";
         private static final String NO_HEADERS = "noheaders";
@@ -140,6 +191,14 @@ public class PumapiRequest {
         }
     }
 
+    /**
+     * PUMAPI request formats names.
+     *
+     * Note: JSON currently unsupported.
+     *
+     * @author seb
+     *
+     */
     public enum Format {
         csv,
         json
@@ -159,7 +218,7 @@ public class PumapiRequest {
         Id("id"),
         Password("pwd");
 
-        /** PUMAPI call identifier */
+        /** PUMAPI call identifier. */
         private String pumapiName;
 
         private Filter(String name) {
@@ -203,7 +262,7 @@ public class PumapiRequest {
         GetSystemRights("getsysrights"),
         Authenticate("auth");
 
-        /** PUMAPI call identifier */
+        /** PUMAPI call identifier. */
         private String pumapiName;
 
         private Action(String name) {

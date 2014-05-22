@@ -22,13 +22,13 @@ public final class Check {
         return (null == input || input.trim().isEmpty());
     }
 
-    public final static void notNull(Object obj, String argName) {
+    public static final void notNull(Object obj, String argName) {
         if (null == obj) {
             rejectEmptyParam(argName);
         }
     }
 
-    public final static void notEmpty(String obj, String argName) {
+    public static final void notEmpty(String obj, String argName) {
         Check.notNull(obj, argName);
 
         if (empty(obj)) {
@@ -36,7 +36,7 @@ public final class Check {
         }
     }
 
-    public final static void notEmpty(Map<?, ?> obj, String argName) {
+    public static final void notEmpty(Map<?, ?> obj, String argName) {
         Check.notNull(obj, argName);
 
         if (obj.keySet().isEmpty()) {
@@ -44,7 +44,7 @@ public final class Check {
         }
     }
 
-    public final static void notEmpty(Properties obj, String argName) {
+    public static final void notEmpty(Properties obj, String argName) {
         Check.notNull(obj, argName);
 
         if (obj.isEmpty()) {
@@ -52,7 +52,7 @@ public final class Check {
         }
     }
 
-    public final static void strictlyPositive(Number number, String argName) {
+    public static final void strictlyPositive(Number number, String argName) {
         Check.notNull(number, argName);
 
         if (number.intValue() < 1) {
@@ -61,7 +61,7 @@ public final class Check {
         }
     }
 
-    private static void rejectEmptyParam(String argName) throws IllegalArgumentException {
+    private static final void rejectEmptyParam(String argName) throws IllegalArgumentException {
         throw new IllegalArgumentException(
             String.format("Condition not met - expected : non-empty parameter for %s", argName));
     }

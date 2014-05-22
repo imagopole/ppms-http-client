@@ -22,7 +22,7 @@ import org.testng.annotations.Parameters;
 import org.unitils.spring.annotation.SpringApplicationContext;
 import org.unitils.spring.annotation.SpringBeanByType;
 
-import static org.imagopole.ppms.util.PumapiUtil.empty;
+import static org.imagopole.ppms.util.Check.empty;
 import static org.testng.Assert.fail;
 
 /**

@@ -18,7 +18,7 @@ public class GetSystemCsvResponseConverter extends AbstractPpmsSystemCsvConverte
        implements PumapiDataConverter<String, PpmsSystem> {
 
     /**
-     * Vanilla constructor
+     * Vanilla constructor.
      */
     public GetSystemCsvResponseConverter() {
         super();

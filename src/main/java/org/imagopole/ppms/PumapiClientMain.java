@@ -20,19 +20,19 @@ import org.imagopole.ppms.impl.convert.DefaultResponseConverterFactory;
  */
 public class PumapiClientMain {
 
-    private final static String USAGE =
-            "\nUsage: \n" +
-            "    java org.imagopole.ppms.PumapiClientMain <ppms_endpoint_url> <ppms_api_key> [conn_timeout_ms] [sock_timeout_ms]" +
-            "\nExample: \n" +
-            "    java org.imagopole.ppms.PumapiClientMain http://www.ppms.info/ppms/pumapi/ SuperSecretApiKey 1000 1000" ;
+    private static final String USAGE =
+            "\nUsage: \n"
+            + "    java org.imagopole.ppms.PumapiClientMain <ppms_endpoint_url> <ppms_api_key> [conn_timeout_ms] [sock_timeout_ms]"
+            + "\nExample: \n"
+            + "    java org.imagopole.ppms.PumapiClientMain http://www.ppms.info/ppms/pumapi/ SuperSecretApiKey 1000 1000";
 
-    private final static String PROXY_HOST_KEY = "http.proxyHost";
-    private final static String PROXY_PORT_KEY = "http.proxyPort";
+    private static final String PROXY_HOST_KEY = "http.proxyHost";
+    private static final String PROXY_PORT_KEY = "http.proxyPort";
 
     /**
      * Vanilla constructor
      */
-    public PumapiClientMain() {
+    private PumapiClientMain() {
        super();
     }
 
@@ -125,12 +125,8 @@ public class PumapiClientMain {
 
         switch (args.length) {
 
-            case 2 : client = boot(args);
-                     break;
-
-            case 3 : client = boot(args);
-                     break;
-
+            case 2 :
+            case 3 :
             case 4 : client = boot(args);
                      break;
 

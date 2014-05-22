@@ -7,7 +7,6 @@ import java.io.StringReader;
 
 import org.csveed.api.CsvReader;
 import org.csveed.api.CsvReaderImpl;
-import org.csveed.bean.BeanProperties;
 import org.csveed.bean.BeanReaderInstructions;
 import org.csveed.bean.BeanReaderInstructionsImpl;
 import org.csveed.bean.ColumnIndexMapper;
@@ -25,20 +24,20 @@ import org.imagopole.ppms.util.PumapiUtil;
 public abstract class AbstractPpmsSystemCsvConverter {
 
     /**
-     * Vanilla constructor
+     * Vanilla constructor.
      */
     public AbstractPpmsSystemCsvConverter() {
         super();
     }
 
     /**
-     * Builds a {@link CsvReader} configured to map the PUMAPI CSV response body (with header)
-     * to a {@link PpmsSystem} object.
+     * Builds a {@link org.csveed.api.CsvReader} configured to map the PUMAPI CSV response body (with header)
+     * to a {@link org.imagopole.ppms.api.dto.PpmsSystem} object.
      *
      * @param input the CSV response body
      * @return the CSV reader
      *
-     * @see BeanProperties#mapNameToProperty(String, String)
+     * @see org.csveed.bean.BeanProperties#mapNameToProperty(String, String)
      */
     protected CsvReader<PpmsSystem> buildCsvReader(String input) {
         Check.notEmpty(input, "input");
