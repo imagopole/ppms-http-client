@@ -12,7 +12,7 @@ import org.csveed.bean.BeanReaderInstructionsImpl;
 import org.csveed.bean.ColumnIndexMapper;
 import org.imagopole.ppms.api.dto.PpmsSystem;
 import org.imagopole.ppms.util.Check;
-import org.imagopole.ppms.util.PumapiUtil;
+import static org.imagopole.ppms.util.PumapiUtil.COMMA;
 
 
 /**
@@ -43,7 +43,7 @@ public abstract class AbstractPpmsSystemCsvConverter {
         Check.notEmpty(input, "input");
 
         BeanReaderInstructions instructions =
-            new BeanReaderInstructionsImpl(PpmsSystem.class).setSeparator(PumapiUtil.COMMA);
+            new BeanReaderInstructionsImpl(PpmsSystem.class).setSeparator(COMMA);
 
         // note: use column index mapper as a workaround for BeanProperties name to property mapping
         // method which forces all column names to lowercase before mapping

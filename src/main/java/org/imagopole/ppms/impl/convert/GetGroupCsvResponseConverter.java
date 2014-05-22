@@ -3,6 +3,9 @@
  */
 package org.imagopole.ppms.impl.convert;
 
+import static org.imagopole.ppms.util.Check.empty;
+import static org.imagopole.ppms.util.PumapiUtil.COMMA;
+
 import java.io.StringReader;
 
 import org.csveed.api.CsvReader;
@@ -13,7 +16,6 @@ import org.csveed.bean.ColumnNameMapper;
 import org.imagopole.ppms.api.convert.PumapiDataConverter;
 import org.imagopole.ppms.api.dto.PpmsGroup;
 import org.imagopole.ppms.util.Check;
-import org.imagopole.ppms.util.PumapiUtil;
 
 
 /**
@@ -40,7 +42,7 @@ public class GetGroupCsvResponseConverter
     public PpmsGroup map(String input) {
         PpmsGroup result = null;
 
-        if (null != input && !input.isEmpty()) {
+        if (!empty(input)) {
 
             CsvReader<PpmsGroup> csvReader = buildCsvReader(input);
             result = csvReader.readBean();
@@ -54,7 +56,7 @@ public class GetGroupCsvResponseConverter
         Check.notEmpty(input, "input");
 
         BeanReaderInstructions instructions =
-            new BeanReaderInstructionsImpl(PpmsGroup.class).setSeparator(PumapiUtil.COMMA);
+            new BeanReaderInstructionsImpl(PpmsGroup.class).setSeparator(COMMA);
 
         CsvReader<PpmsGroup> csvReader =
                new CsvReaderImpl<PpmsGroup>(new StringReader(input), instructions)

@@ -3,6 +3,8 @@
  */
 package org.imagopole.ppms.impl.convert;
 
+import static org.imagopole.ppms.util.Check.empty;
+
 import org.csveed.api.CsvReader;
 import org.imagopole.ppms.api.convert.PumapiDataConverter;
 import org.imagopole.ppms.api.dto.PpmsSystem;
@@ -31,7 +33,7 @@ public class GetSystemCsvResponseConverter extends AbstractPpmsSystemCsvConverte
     public PpmsSystem map(String input) {
         PpmsSystem result = null;
 
-        if (null != input && !input.isEmpty()) {
+        if (!empty(input)) {
 
             CsvReader<PpmsSystem> csvReader = buildCsvReader(input);
             result = csvReader.readBean();

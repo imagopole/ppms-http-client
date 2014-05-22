@@ -59,7 +59,7 @@ public class GetUserRightsResponseConverter
     public List<PpmsUserPrivilege> map(String input) {
         List<PpmsUserPrivilege> result = new ArrayList<PpmsUserPrivilege>();
 
-        if (null != input && !input.isEmpty()) {
+        if (!empty(input)) {
             Scanner scanner = new Scanner(input);
 
             while (scanner.hasNextLine()) {
@@ -82,7 +82,7 @@ public class GetUserRightsResponseConverter
 
         PpmsUserPrivilege result = null;
 
-        if (null != sanitizedLine && !sanitizedLine.isEmpty()) {
+        if (!empty(sanitizedLine)) {
             String[] lineParts = sanitizedLine.split(getRecordsSeparator().toString());
 
             if (null != lineParts && lineParts.length >= MIN_RECORDS_PER_LINE) {

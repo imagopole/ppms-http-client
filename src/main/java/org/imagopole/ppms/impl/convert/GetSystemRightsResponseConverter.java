@@ -60,7 +60,7 @@ public class GetSystemRightsResponseConverter
     public List<PpmsSystemPrivilege> map(String input) {
         List<PpmsSystemPrivilege> result = new ArrayList<PpmsSystemPrivilege>();
 
-        if (null != input && !input.isEmpty()) {
+        if (!empty(input)) {
             Scanner scanner = new Scanner(input);
 
             while (scanner.hasNextLine()) {
@@ -83,7 +83,7 @@ public class GetSystemRightsResponseConverter
 
         PpmsSystemPrivilege result = null;
 
-        if (null != sanitizedLine && !sanitizedLine.isEmpty()) {
+        if (!empty(sanitizedLine)) {
             String[] lineParts = sanitizedLine.split(getRecordsSeparator().toString());
 
             if (null != lineParts && lineParts.length >= MIN_RECORDS_PER_LINE) {

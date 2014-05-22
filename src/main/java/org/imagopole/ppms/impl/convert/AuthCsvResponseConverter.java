@@ -3,6 +3,7 @@
  */
 package org.imagopole.ppms.impl.convert;
 
+import static org.imagopole.ppms.util.Check.empty;
 import static org.imagopole.ppms.util.PumapiUtil.trimAll;
 
 import org.imagopole.ppms.api.convert.PumapiDataConverter;
@@ -34,7 +35,7 @@ public class AuthCsvResponseConverter
     public Boolean map(String input) {
         Boolean success = Boolean.FALSE;
 
-        if (null != input && !input.isEmpty()) {
+        if (!empty(input)) {
 
             String sanitizedInput = trimAll(input);
             success = sanitizedInput.contains(OK_RETURN_CODE);

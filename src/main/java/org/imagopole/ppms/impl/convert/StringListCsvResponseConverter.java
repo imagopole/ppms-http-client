@@ -3,6 +3,7 @@
  */
 package org.imagopole.ppms.impl.convert;
 
+import static org.imagopole.ppms.util.Check.empty;
 import static org.imagopole.ppms.util.PumapiUtil.trimAll;
 
 import java.util.ArrayList;
@@ -40,14 +41,14 @@ public class StringListCsvResponseConverter
     public List<String> map(String input) {
         List<String> result = new ArrayList<String>();
 
-        if (null != input && !input.isEmpty()) {
+        if (!empty(input)) {
             Scanner scanner = new Scanner(input);
 
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String sanitizedLine = trimAll(line);
 
-                if (null != sanitizedLine && !sanitizedLine.isEmpty()) {
+                if (!empty(sanitizedLine)) {
                     result.add(sanitizedLine);
                 }
             }
