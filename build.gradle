@@ -14,7 +14,7 @@ apply plugin: 'asciidoctor'
 /**** Project configuration ****/
 
 group = 'org.imagopole.ppms'
-version = '0.4.1-SNAPSHOT'
+version = '0.4.1'
 description = """HTTP client for the PPMS Utility Management API (PUMAPI)"""
 
 
