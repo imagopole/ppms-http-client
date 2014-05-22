@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
  * @author seb
  *
  */
-public class GetUsersResponseConverterTests {
+public class StringListResponseConverterTests {
 
     @Test
     public void shouldConvertNullToEmptyList() {

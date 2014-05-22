@@ -36,7 +36,7 @@ public class GetSystemTests extends AbstractPumapiTest {
             assertNotNull(system, "Non-null results expected");
             assertEquals(system.getSystemId(), testSystemId, "Incorrect systemId attribute");
         } else {
-            log.warn(String.format("No value for test key: %s - skipping integration test", TestKeys.UNIT_LOGIN));
+            log.warn(String.format("No value for test key: %s - skipping integration test", TestKeys.SYSTEM_ID));
         }
     }
 

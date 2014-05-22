@@ -10,6 +10,7 @@ import org.imagopole.ppms.api.dto.PpmsPrivilege;
 import org.imagopole.ppms.api.dto.PpmsUserPrivilege;
 import org.imagopole.ppms.impl.convert.GetUserRightsResponseConverter;
 import org.imagopole.ppms.util.PumapiUtil;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
@@ -21,69 +22,17 @@ public class GetUserRightsCsvResponseConverterTests {
 
     private GetUserRightsResponseConverter converter = new GetUserRightsResponseConverter(PumapiUtil.COMMA);
 
-    @Test
-    public void shouldConvertNullToEmptyList() {
-        List<PpmsUserPrivilege> result = converter.map(null);
+    @Test(dataProvider = "emptyInputDataProvider")
+    public void shouldConvertEmptyInputToEmptyList(String input) {
+        List<PpmsUserPrivilege> result = converter.map(input);
 
         assertNotNull(result, "Non-null result expected");
         assertTrue(result.isEmpty(), "Empty result expected");
     }
 
-    @Test
-    public void shouldConvertBlankToEmptyList() {
-        List<PpmsUserPrivilege> result = converter.map("");
-
-        assertNotNull(result, "Non-null result expected");
-        assertTrue(result.isEmpty(), "Empty result expected");
-    }
-
-    @Test
-    public void shouldConvertWhitespaceToEmptyList() {
-        List<PpmsUserPrivilege> result = converter.map("    ");
-
-        assertNotNull(result, "Non-null result expected");
-        assertTrue(result.isEmpty(), "Empty result expected");
-    }
-
-    @Test
-    public void shouldRemoveCarriageReturns() {
-        List<PpmsUserPrivilege> result = converter.map("A,123\r");
-
-        assertNotNull(result, "Non-null result expected");
-        assertTrue(result.size() == 1, "One element expected");
-
-        PpmsUserPrivilege priv = (PpmsUserPrivilege) result.get(0);
-        assertEquals(priv.getPrivilege(), PpmsPrivilege.Autonomous);
-        assertEquals(priv.getSystemId(), new Long(123));
-    }
-
-    @Test
-    public void shouldRemoveLineFeeds() {
-        List<PpmsUserPrivilege> result = converter.map("A,123\n");
-
-        assertNotNull(result, "Non-null result expected");
-        assertTrue(result.size() == 1, "One element expected");
-
-        PpmsUserPrivilege priv = (PpmsUserPrivilege) result.get(0);
-        assertEquals(priv.getPrivilege(), PpmsPrivilege.Autonomous);
-        assertEquals(priv.getSystemId(), new Long(123));
-    }
-
-    @Test
-    public void shouldRemoveEndOfLines() {
-        List<PpmsUserPrivilege> result = converter.map("A,123\r\n");
-
-        assertNotNull(result, "Non-null result expected");
-        assertTrue(result.size() == 1, "One element expected");
-
-        PpmsUserPrivilege priv = (PpmsUserPrivilege) result.get(0);
-        assertEquals(priv.getPrivilege(), PpmsPrivilege.Autonomous);
-        assertEquals(priv.getSystemId(), new Long(123));
-    }
-
-    @Test
-    public void shouldRemoveTrailingSpaces() {
-        List<PpmsUserPrivilege> result = converter.map("  A,123 \r\n  ");
+    @Test(dataProvider = "trailingInputDataProvider")
+    public void shouldTrimInput(String input) {
+        List<PpmsUserPrivilege> result = converter.map(input);
 
         assertNotNull(result, "Non-null result expected");
         assertTrue(result.size() == 1, "One element expected");
@@ -116,6 +65,25 @@ public class GetUserRightsCsvResponseConverterTests {
        PpmsUserPrivilege priv4 = (PpmsUserPrivilege) result.get(3);
        assertEquals(priv4.getPrivilege(), PpmsPrivilege.SuperUser);
        assertEquals(priv4.getSystemId(), new Long(126));
+    }
+
+    @DataProvider(name = "emptyInputDataProvider")
+    private Object[][] provideEmptyInput() {
+        return new Object[][] {
+            { null   },
+            { ""     },
+            { "    " }
+        };
+    }
+
+    @DataProvider(name = "trailingInputDataProvider")
+    private Object[][] provideTrailingInput() {
+        return new Object[][] {
+            { "A,123\r"        },
+            { "A,123\n"        },
+            { "A,123\r\n"      },
+            { "  A,123 \r\n  " }
+        };
     }
 
 }

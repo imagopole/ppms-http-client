@@ -2,16 +2,31 @@ name: PumapiTestSuite
 
 tests:
 
-  - name: Api
+  - name: Config
     classes:
       - org.imagopole.ppms.api.config.PumapiConfigTests
-      - org.imagopole.ppms.api.convert.GetUsersResponseConverterTests
+
+  - name: Convert
+    classes:
+      - org.imagopole.ppms.impl.convert.AuthCsvResponseConverterTests
+      - org.imagopole.ppms.impl.convert.GetGroupCsvResponseConverterTests
+      - org.imagopole.ppms.impl.convert.GetSystemCsvResponseConverterTests
+      - org.imagopole.ppms.impl.convert.GetSystemRightsColonResponseConverterTests
+      - org.imagopole.ppms.impl.convert.GetSystemRightsCsvResponseConverterTests
+      - org.imagopole.ppms.impl.convert.GetSystemsCsvResponseConverterTests
+      - org.imagopole.ppms.impl.convert.GetUserCsvResponseConverterTests
+      - org.imagopole.ppms.impl.convert.GetUserRightsColonResponseConverterTests
+      - org.imagopole.ppms.impl.convert.GetUserRightsCsvResponseConverterTests
+      - org.imagopole.ppms.impl.convert.StringListResponseConverterTests
 
   - name: Impl
     classes:
-      - org.imagopole.ppms.impl.GenericIntegrationTests
       - org.imagopole.ppms.impl.AuthenticateTests
+      - org.imagopole.ppms.impl.GenericIntegrationTests
+      - org.imagopole.ppms.impl.GetGroupsTests
       - org.imagopole.ppms.impl.GetGroupTests
+      - org.imagopole.ppms.impl.GetSystemRightsTests
+      - org.imagopole.ppms.impl.GetSystemsTests
       - org.imagopole.ppms.impl.GetSystemTests
       - org.imagopole.ppms.impl.GetUserRightsTests
       - org.imagopole.ppms.impl.GetUsersTests

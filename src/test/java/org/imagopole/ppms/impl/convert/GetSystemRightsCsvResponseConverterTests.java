@@ -7,7 +7,7 @@ import static org.testng.Assert.assertTrue;
 import java.util.List;
 
 import org.imagopole.ppms.api.dto.PpmsPrivilege;
-import org.imagopole.ppms.api.dto.PpmsUserPrivilege;
+import org.imagopole.ppms.api.dto.PpmsSystemPrivilege;
 import org.imagopole.ppms.util.PumapiUtil;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -17,13 +17,13 @@ import org.testng.annotations.Test;
  * @author seb
  *
  */
-public class GetUserRightsColonResponseConverterTests {
+public class GetSystemRightsCsvResponseConverterTests {
 
-    private GetUserRightsResponseConverter converter = new GetUserRightsResponseConverter(PumapiUtil.COLON);
+    private GetSystemRightsResponseConverter converter = new GetSystemRightsResponseConverter(PumapiUtil.COMMA);
 
     @Test(dataProvider = "emptyInputDataProvider")
     public void shouldConvertNullToEmptyList(String input) {
-        List<PpmsUserPrivilege> result = converter.map(input);
+        List<PpmsSystemPrivilege> result = converter.map(input);
 
         assertNotNull(result, "Non-null result expected");
         assertTrue(result.isEmpty(), "Empty result expected");
@@ -31,39 +31,39 @@ public class GetUserRightsColonResponseConverterTests {
 
     @Test(dataProvider = "trailingInputDataProvider")
     public void shouldTrimInput(String input) {
-        List<PpmsUserPrivilege> result = converter.map(input);
+        List<PpmsSystemPrivilege> result = converter.map(input);
 
         assertNotNull(result, "Non-null result expected");
         assertTrue(result.size() == 1, "One element expected");
 
-        PpmsUserPrivilege priv = (PpmsUserPrivilege) result.get(0);
+        PpmsSystemPrivilege priv = (PpmsSystemPrivilege) result.get(0);
         assertEquals(priv.getPrivilege(), PpmsPrivilege.Autonomous);
-        assertEquals(priv.getSystemId(), new Long(123));
+        assertEquals(priv.getUsername(), "some.user");
     }
 
     @Test
     public void responseSampleTest() {
-       String response = "A:57 \r\n D:70 \r\n N:53 \r\n S:126 \r\n";
-       List<PpmsUserPrivilege> result = converter.map(response);
+       String response = "A,\"some.user\" \r\n D,\"another.user\" \r\n N,\"and another\" \r\n S,\"some.user\" \r\n";
+       List<PpmsSystemPrivilege> result = converter.map(response);
 
        assertNotNull(result, "Non-null result expected");
        assertTrue(result.size() == 4, "Four elements expected");
 
-       PpmsUserPrivilege priv1 = (PpmsUserPrivilege) result.get(0);
+       PpmsSystemPrivilege priv1 = (PpmsSystemPrivilege) result.get(0);
        assertEquals(priv1.getPrivilege(), PpmsPrivilege.Autonomous);
-       assertEquals(priv1.getSystemId(), new Long(57));
+       assertEquals(priv1.getUsername(), "some.user");
 
-       PpmsUserPrivilege priv2 = (PpmsUserPrivilege) result.get(1);
+       PpmsSystemPrivilege priv2 = (PpmsSystemPrivilege) result.get(1);
        assertEquals(priv2.getPrivilege(), PpmsPrivilege.Deactivated);
-       assertEquals(priv2.getSystemId(), new Long(70));
+       assertEquals(priv2.getUsername(), "another.user");
 
-       PpmsUserPrivilege priv3 = (PpmsUserPrivilege) result.get(2);
+       PpmsSystemPrivilege priv3 = (PpmsSystemPrivilege) result.get(2);
        assertEquals(priv3.getPrivilege(), PpmsPrivilege.Novice);
-       assertEquals(priv3.getSystemId(), new Long(53));
+       assertEquals(priv3.getUsername(), "and another");
 
-       PpmsUserPrivilege priv4 = (PpmsUserPrivilege) result.get(3);
+       PpmsSystemPrivilege priv4 = (PpmsSystemPrivilege) result.get(3);
        assertEquals(priv4.getPrivilege(), PpmsPrivilege.SuperUser);
-       assertEquals(priv4.getSystemId(), new Long(126));
+       assertEquals(priv4.getUsername(), "some.user");
     }
 
     @DataProvider(name = "emptyInputDataProvider")
@@ -78,10 +78,10 @@ public class GetUserRightsColonResponseConverterTests {
     @DataProvider(name = "trailingInputDataProvider")
     private Object[][] provideTrailingInput() {
         return new Object[][] {
-            { "A:123\r"        },
-            { "A:123\n"        },
-            { "A:123\r\n"      },
-            { "  A:123 \r\n  " }
+            { "A,\"some.user\"\r"        },
+            { "A,\"some.user\"\n"        },
+            { "A,\"some.user\"\r\n"      },
+            { "  A,\"some.user\" \r\n  " }
         };
     }
 

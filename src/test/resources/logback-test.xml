@@ -45,6 +45,7 @@
   <!-- Internal loggers     -->
   <!--                      -->
   <logger name="org.imagopole" level="debug"/>
+  <logger name="org.imagopole.ppms.impl.convert" level="info"/>
 
   <!--                      -->
   <!-- Dependencies loggers -->
@@ -67,5 +68,7 @@
   <logger name="org.apache.http.headers" additivity="false" level="info">
      <appender-ref ref="FILE_HC_HEADERS"/>
   </logger>
+  <!-- CSVeed mapping -->
+  <logger name="org.csveed" level="warn"/>
 
 </configuration>
