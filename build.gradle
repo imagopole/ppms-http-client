@@ -7,7 +7,7 @@ apply plugin: 'pmd'
 apply plugin: 'checkstyle'
 apply plugin: 'project-report' // gradle-1.9 feature
 apply plugin: 'jacoco'         // gradle-1.9 incubating
-apply plugin: 'asciidoctor'
+apply plugin: 'org.asciidoctor.gradle.asciidoctor'
 
 
 /********************************/
@@ -163,7 +163,7 @@ jacocoTestReport {
 
 asciidoctor {
     sourceDir = file("docs/asciidoc")
-    backend   = "html5"
+    backends   = [ "html5" ]
 }
 
 
@@ -197,15 +197,11 @@ artifacts {
 
 buildscript {
     ext.pluginsVersions = [
-        asciidoctor : '0.7.0'
+        asciidoctor : '1.5.0'
     ]
 
     repositories {
         jcenter()
-        maven {
-            name 'Bintray Asciidoctor repo'
-            url  'http://dl.bintray.com/content/aalmiray/asciidoctor'
-        }
     }
 
     dependencies {
