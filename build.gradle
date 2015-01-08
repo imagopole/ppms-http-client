@@ -212,3 +212,7 @@ buildscript {
         classpath 'org.asciidoctor:asciidoctor-gradle-plugin:' + pluginsVersions.asciidoctor
     }
 }
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '1.9'
+}
