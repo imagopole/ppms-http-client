@@ -8,6 +8,10 @@ apply plugin: 'checkstyle'
 apply plugin: 'project-report' // gradle-1.9 feature
 apply plugin: 'jacoco'         // gradle-1.9 incubating
 apply plugin: 'org.asciidoctor.gradle.asciidoctor'
+apply plugin: 'info-broker'
+apply plugin: 'info-jar'
+apply plugin: 'info-basic'
+apply plugin: 'info-java'
 
 
 /********************************/
@@ -41,8 +45,7 @@ targetCompatibility = 1.6
 
 jar {
     manifest {
-        attributes 'Implementation-Title': 'PPMS HTTP client for PUMAPI version ' + versions.pumapi,
-                   'Implementation-Version': version
+        attributes 'X-Pumapi-Version': versions.pumapi
     }
 }
 
@@ -202,7 +205,8 @@ artifacts {
 buildscript {
     ext.pluginsVersions = [
         asciidoctor      : '1.5.2',
-        asciidoctorjPdf  : '1.5.0-alpha.6'
+        asciidoctorjPdf  : '1.5.0-alpha.6',
+        info             : '2.2.0'
     ]
 
     repositories {
@@ -212,6 +216,7 @@ buildscript {
     dependencies {
         classpath 'org.asciidoctor:asciidoctor-gradle-plugin:' + pluginsVersions.asciidoctor
         classpath 'org.asciidoctor:asciidoctorj-pdf:' + pluginsVersions.asciidoctorjPdf
+        classpath 'com.netflix.nebula:gradle-info-plugin:' + pluginsVersions.info
     }
 }
 
