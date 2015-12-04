@@ -8,6 +8,7 @@ apply plugin: 'checkstyle'
 apply plugin: 'project-report' // gradle-1.9 feature
 apply plugin: 'jacoco'         // gradle-1.9 incubating
 apply plugin: 'org.asciidoctor.gradle.asciidoctor'
+apply plugin: 'com.jfrog.bintray'
 apply plugin: 'info-broker'
 apply plugin: 'info-jar'
 apply plugin: 'info-basic'
@@ -173,6 +174,25 @@ asciidoctor {
     separateOutputDirs = true
 }
 
+bintray {
+    user    = project.hasProperty('bintray_user')    ? bintray_user                : null
+    key     = project.hasProperty('bintray_key')     ? bintray_key                 : null
+    dryRun  = project.hasProperty('bintray_dryRun')  ? bintray_dryRun.toBoolean()  : true
+    publish = project.hasProperty('bintray_publish') ? bintray_publish.toBoolean() : false
+
+    configurations = [ 'archives' ]
+
+    pkg {
+        repo      = project.bintray_repo
+        userOrg   = project.hasProperty('bintray_org') ? bintray_org : null
+        name      = project.bintray_pkg
+        desc      = project.description
+        vcsUrl    = project.bintray_vcsUrl
+        licenses  = [ 'GPL-2.0' ]
+
+        version.mavenCentralSync.sync = false
+    }
+}
 
 /*********************************************/
 /**** Custom tasks/project configuration ****/
@@ -206,6 +226,7 @@ buildscript {
     ext.pluginsVersions = [
         asciidoctor      : '1.5.2',
         asciidoctorjPdf  : '1.5.0-alpha.6',
+        bintray          : '1.4',
         info             : '2.2.0'
     ]
 
@@ -216,6 +237,7 @@ buildscript {
     dependencies {
         classpath 'org.asciidoctor:asciidoctor-gradle-plugin:' + pluginsVersions.asciidoctor
         classpath 'org.asciidoctor:asciidoctorj-pdf:' + pluginsVersions.asciidoctorjPdf
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:' + pluginsVersions.bintray
         classpath 'com.netflix.nebula:gradle-info-plugin:' + pluginsVersions.info
     }
 }
